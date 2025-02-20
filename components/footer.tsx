@@ -24,7 +24,7 @@ export async function Footer() {
         </FooterItem>
         <FooterItem
           newTab
-          href="https://github.com/noahstreller/grade-calculator"
+          href="https://github.com/nstr-dev/grade-calculator"
         >
           <SiGithub className="mr-2 size-4" />
           {t("external.source-code")}
@@ -33,9 +33,9 @@ export async function Footer() {
           newTab
           href={
             process.env.npm_package_version
-              ? "https://github.com/noahstreller/grade-calculator/tree/v" +
+              ? "https://github.com/nstr-dev/grade-calculator/tree/v" +
                 process.env.npm_package_version
-              : "https://github.com/noahstreller/grade-calculator"
+              : "https://github.com/nstr-dev/grade-calculator"
           }
         >
           <GitBranch className="mr-2 size-4" />
