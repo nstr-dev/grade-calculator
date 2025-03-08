@@ -122,15 +122,13 @@ export default async function RootLayout({
   const messages = await getMessages();
   return (
     <html lang={locale}>
-      {process.env.NODE_ENV === "production" &&
-        process.env.UMAMI_SCRIPT_URL &&
-        process.env.UMAMI_DATA_WEBSITE_ID && (
-          <Script
-            defer
-            src={process.env.UMAMI_SCRIPT_URL}
-            data-website-id={process.env.UMAMI_DATA_WEBSITE_ID}
-          />
-        )}
+      {process.env.UMAMI_SCRIPT_URL && process.env.UMAMI_DATA_WEBSITE_ID && (
+        <Script
+          defer
+          src={process.env.UMAMI_SCRIPT_URL}
+          data-website-id={process.env.UMAMI_DATA_WEBSITE_ID}
+        />
+      )}
       <body className={cn(inter.className)}>
         {maintenance.maintenance ? (
           <Maintenance maintenance={maintenance} />
