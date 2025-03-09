@@ -26,7 +26,9 @@ export default function LoginButton({
   return (
     <div className={cn("items-center justify-center flex", className)}>
       {session.status === "authenticated" ? (
-        <Button onClick={() => signOut()}>{t("auth.logout")}</Button>
+        <Button data-umami-event="Log out" onClick={() => signOut()}>
+          {t("auth.logout")}
+        </Button>
       ) : session.status === "loading" ? (
         <LoadingSpinner />
       ) : (

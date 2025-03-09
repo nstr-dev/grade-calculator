@@ -79,7 +79,11 @@ export default function CookieConsent({
             </p>
           </div>
           <div className="flex gap-2 p-4 py-5 border-t border-border bg-background/20">
-            <Button onClick={accept} className="w-full">
+            <Button
+              data-umami-event="Accept Cookies"
+              onClick={accept}
+              className="w-full"
+            >
               <CheckIcon className="size-4 mr-2" />
               Got it
             </Button>

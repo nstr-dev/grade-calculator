@@ -160,7 +160,12 @@ export function TemplateSelector({
           )}
         />
         <div className="flex flex-col justify-between md:flex-row gap-2">
-          <Button variant={"secondary"} type="submit">
+          <Button
+            data-umami-event="Apply Template"
+            data-umami-event-template={form.getValues().preferenceTemplate}
+            variant={"secondary"}
+            type="submit"
+          >
             <Wrench className="size-4 text-muted-foreground mr-2" />
             {t("onboarding.templates.apply")}
           </Button>
@@ -168,7 +173,12 @@ export function TemplateSelector({
             target="_blank"
             href="https://github.com/noahstreller/grade-calculator/issues/new/choose"
           >
-            <Button variant={"outline"} type="button" className="w-full">
+            <Button
+              data-umami-event="Request template"
+              variant={"outline"}
+              type="button"
+              className="w-full"
+            >
               <MessageCircleQuestion className="size-4 text-muted-foreground mr-2" />
               {t("onboarding.templates.request")}
             </Button>

@@ -32,15 +32,27 @@ export function ThemeSwitcher({ expanded = false }: { expanded?: boolean }) {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>{t("themes.title")}</DropdownMenuLabel>
-          <DropdownMenuItem onClick={() => setTheme("light")}>
+          <DropdownMenuItem
+            data-umami-event="Change Theme"
+            data-umami-event-theme="Light"
+            onClick={() => setTheme("light")}
+          >
             <Sun className="h-[1rem] w-[1rem] mr-[0.5rem]" />
             {t("themes.light")}
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme("dark")}>
+          <DropdownMenuItem
+            data-umami-event="Change Theme"
+            data-umami-event-theme="Dark"
+            onClick={() => setTheme("dark")}
+          >
             <Moon className="h-[1rem] w-[1rem] mr-[0.5rem]" />
             {t("themes.dark")}
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme("system")}>
+          <DropdownMenuItem
+            data-umami-event="Change Theme"
+            data-umami-event-theme="System"
+            onClick={() => setTheme("system")}
+          >
             <Laptop className="h-[1rem] w-[1rem] mr-[0.5rem]" />
             {t("themes.system")}
           </DropdownMenuItem>
@@ -58,15 +70,27 @@ export function ThemeSwitcher({ expanded = false }: { expanded?: boolean }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>{t("themes.title")}</DropdownMenuLabel>
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem
+          data-umami-event="Change Theme"
+          data-umami-event-theme="Light"
+          onClick={() => setTheme("light")}
+        >
           <Sun className="h-[1rem] w-[1rem] mr-[0.5rem]" />
           {t("themes.light")}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem
+          data-umami-event="Change Theme"
+          data-umami-event-theme="Dark"
+          onClick={() => setTheme("dark")}
+        >
           <Moon className="h-[1rem] w-[1rem] mr-[0.5rem]" />
           {t("themes.dark")}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem
+          data-umami-event="Change Theme"
+          data-umami-event-theme="System"
+          onClick={() => setTheme("system")}
+        >
           <Laptop className="h-[1rem] w-[1rem] mr-[0.5rem]" />
           {t("themes.system")}
         </DropdownMenuItem>

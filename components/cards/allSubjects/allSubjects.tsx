@@ -137,6 +137,7 @@ export function AllSubjects({
                 </DialogClose>
                 <DialogClose asChild>
                   <Button
+                    data-umami-event="Delete Subject"
                     onClick={async () => {
                       if (subjectToDelete) {
                         let subjectName = catchProblem(
@@ -235,6 +236,7 @@ export function AllSubjects({
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
                 <Button
+                  data-umami-event="Delete Subject"
                   onClick={async () => {
                     if (subjectToDelete) {
                       let subjectName = catchProblem(
