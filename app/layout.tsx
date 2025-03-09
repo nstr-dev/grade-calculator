@@ -125,6 +125,7 @@ export default async function RootLayout({
       {process.env.UMAMI_SCRIPT_URL && process.env.UMAMI_DATA_WEBSITE_ID && (
         <Script
           defer
+          data-do-not-track={process.env.NODE_ENV === "production"}
           src={process.env.UMAMI_SCRIPT_URL}
           data-website-id={process.env.UMAMI_DATA_WEBSITE_ID}
         />

@@ -64,7 +64,13 @@ export function EmailLoginForm() {
             )}
           />
 
-          <Button className="w-full" type="submit" disabled={submitting}>
+          <Button
+            data-umami-event="Sign In"
+            data-umami-event-provider="E-Mail"
+            className="w-full"
+            type="submit"
+            disabled={submitting}
+          >
             {submitting ? (
               <LoadingSpinner />
             ) : (
