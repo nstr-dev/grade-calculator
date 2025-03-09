@@ -162,6 +162,7 @@ export function LandingPage() {
                               </Link>
                             </Button>
                             <Button
+                              data-umami-event="Navigate to Legacy Version"
                               className="w-full shadow-md"
                               variant={"secondary"}
                               asChild
@@ -193,6 +194,7 @@ export function LandingPage() {
                       <CardContent className="gap-5 flex flex-col">
                         <p>{t("landing-page.about.source-code-description")}</p>
                         <Button
+                          data-umami-event="Navigate to GitHub"
                           variant={"secondary"}
                           className="shadow-lg"
                           asChild
@@ -262,6 +264,7 @@ export function LandingPage() {
                             </Link>
                           </Button>
                           <Button
+                            data-umami-event="Navigate to Legacy Version"
                             className="w-full shadow-md"
                             variant={"secondary"}
                             asChild
@@ -328,6 +331,7 @@ export function LandingPage() {
                     <CardContent className="gap-5 flex flex-col">
                       <p>{t("landing-page.about.source-code-description")}</p>
                       <Button
+                        data-umami-event="Navigate to GitHub"
                         variant={"secondary"}
                         className="shadow-lg"
                         asChild
@@ -480,6 +484,7 @@ function GettingStartedTab() {
                   </Link>
                 </Button>
                 <Button
+                  data-umami-event="Navigate to Legacy Version"
                   className="w-full shadow-md"
                   variant={"secondary"}
                   asChild
