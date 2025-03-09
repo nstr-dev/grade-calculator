@@ -46,7 +46,10 @@ export const Maintenance = ({
           </div>
           <div className="flex gap-3">
             <Link target="_blank" href="https://legacy.grades.nstr.dev">
-              <Button variant="default">
+              <Button
+                data-umami-event="Navigate to Legacy Version"
+                variant="default"
+              >
                 <Globe className="mr-2 size-4" /> Legacy
               </Button>
             </Link>
@@ -54,7 +57,10 @@ export const Maintenance = ({
               target="_blank"
               href="https://status.cloud.nstr.dev/status/grades"
             >
-              <Button variant="secondary">
+              <Button
+                data-umami-event="Navigate to Status Page"
+                variant="secondary"
+              >
                 <SatelliteDish className="size-4 mr-2" /> Status Page
               </Button>
             </Link>
@@ -62,7 +68,7 @@ export const Maintenance = ({
               target="_blank"
               href="https://github.com/noahstreller/grade-calculator"
             >
-              <Button variant="secondary">
+              <Button data-umami-event="Navigate to GitHub" variant="secondary">
                 <SiGithub className="size-4 mr-2" />
                 Source Code
               </Button>

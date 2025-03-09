@@ -81,6 +81,8 @@ export function SignInPageComponent() {
                 <Button
                   variant={"secondary"}
                   className="w-full"
+                  data-umami-event="Sign In"
+                  data-umami-event-provider="Local"
                   onClick={() => {
                     signIn("local");
                   }}
@@ -93,6 +95,10 @@ export function SignInPageComponent() {
                 <Button
                   variant={"secondary"}
                   className="w-full"
+                  data-umami-event="Sign In"
+                  data-umami-event-provider={
+                    process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME
+                  }
                   onClick={() => {
                     signIn("custom");
                   }}
@@ -103,6 +109,8 @@ export function SignInPageComponent() {
               )}
               <Button
                 className="w-full"
+                data-umami-event="Sign In"
+                data-umami-event-provider="Discord"
                 onClick={() => {
                   signIn("discord");
                 }}
@@ -112,6 +120,8 @@ export function SignInPageComponent() {
               </Button>
               <Button
                 className="w-full"
+                data-umami-event="Sign In"
+                data-umami-event-provider="GitHub"
                 onClick={() => {
                   signIn("github");
                 }}
@@ -132,7 +142,11 @@ export function SignInPageComponent() {
               <EmailLoginForm />
               <Separator />
               <CardDescription>{t("auth.legacy.description")}</CardDescription>
-              <Button variant={"secondary"} asChild>
+              <Button
+                data-umami-event="Navigate to Legacy Version"
+                variant={"secondary"}
+                asChild
+              >
                 <Link href="https://legacy.grades.nstr.dev">
                   <Globe className="size-4 mr-2" />
                   {t("external.legacy-version")}
@@ -217,6 +231,7 @@ function AuthError({ error }: { error: string }) {
           {t.rich("errors.try-again-or-contact", {
             mailbutton: () => (
               <Button
+                data-umami-event="Contact Support"
                 asChild
                 variant={"link"}
                 className="m-0 p-0 h-fit font-bold"

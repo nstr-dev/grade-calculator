@@ -92,7 +92,12 @@ export default function CookiePolicy() {
       </h2>
       <p>{t("cookie-policy.i-dont-want-cookies.how-to-clear-cookies")} </p>
       <p>{t("cookie-policy.i-dont-want-cookies.legacy-ad")} </p>
-      <Button variant="secondary" className="w-fit self-center" asChild>
+      <Button
+        data-umami-event="Navigate to Legacy Version"
+        variant="secondary"
+        className="w-fit self-center"
+        asChild
+      >
         <Link href="https://legacy.grades.nstr.dev">
           {t("external.legacy-version")}
         </Link>

@@ -12,7 +12,7 @@ services:
       retries: 10
       test: "pg_isready -U admin -d verceldb"
       timeout: 2s
-    image: "postgres:12.17-alpine"
+    image: "postgres:17-alpine"
     restart: unless-stopped
     command: -c 'max_connections=200'
     volumes:
@@ -22,5 +22,36 @@ services:
     ports:
       - 8080:8080
 
+  umami-db:
+    container_name: umami-db
+    volumes:
+      - "umami:/var/lib/postgresql/data"
+      - "./docker/umami:/docker-entrypoint-initdb.d"
+    image: "postgres:17-alpine"
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: "umami"
+      POSTGRES_PASSWORD: "umami"
+      POSTGRES_USER: "umami"
+    healthcheck:
+      interval: 10s
+      retries: 10
+      test: "pg_isready -U umami -d umami"
+      timeout: 2s
+
+  umami-web:
+    image: docker.umami.is/umami-software/umami:postgresql-latest
+    container_name: umami
+    ports:
+      - "3003:3000"
+    environment:
+      DATABASE_URL: "postgres://umami:umami@umami-db:5432/umami"
+
+    depends_on:
+      umami-db:
+        condition: service_healthy
+
 volumes:
   grades:
+  umami:

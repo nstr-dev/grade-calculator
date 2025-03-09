@@ -242,7 +242,12 @@ export function CreateGradeFormForSubject({
           )}
         />
 
-        <Button className="w-full" type="submit" disabled={submitting}>
+        <Button
+          data-umami-event="Create Grade for Subject"
+          className="w-full"
+          type="submit"
+          disabled={submitting}
+        >
           {submitting ? <LoadingSpinner /> : t("actions.submit")}
         </Button>
       </form>

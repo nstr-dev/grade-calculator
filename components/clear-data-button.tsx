@@ -53,10 +53,18 @@ export function ClearDataButton({
             <Button onClick={() => setOpen(false)}>
               {translations.cancel}
             </Button>
-            <Button onClick={clearGrades} variant="secondary">
+            <Button
+              data-umami-event="Clear Grades Only"
+              onClick={clearGrades}
+              variant="secondary"
+            >
               {translations.actions.clearGradesOnly}
             </Button>
-            <Button variant="destructive" onClick={clearData}>
+            <Button
+              data-umami-event="Clear All Data"
+              variant="destructive"
+              onClick={clearData}
+            >
               {translations.dangerContinue}
             </Button>
           </AlertDialogFooter>

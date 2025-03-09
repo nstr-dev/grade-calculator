@@ -15,7 +15,12 @@ export function LoggedInAvatar({ className = "" }: { className?: string }) {
   return session.status === "authenticated" ? (
     <Popover>
       <PopoverTrigger asChild>
-        <Button size={"icon"} variant={"ghost"} className="rounded-full">
+        <Button
+          data-umami-event="View Profile"
+          size={"icon"}
+          variant={"ghost"}
+          className="rounded-full"
+        >
           <Avatar className={className}>
             <AvatarImage src={session.data?.user.image || ""} />
             <AvatarFallback>
