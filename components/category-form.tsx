@@ -114,7 +114,13 @@ export function CreateCategoryForm({ setOpen }: { setOpen: Function }) {
           )}
         />
 
-        <Button className="w-full" type="submit" disabled={submitting}>
+        <Button
+          data-umami-event="Create Category"
+          data-umami-event-category={form.getValues("category")}
+          className="w-full"
+          type="submit"
+          disabled={submitting}
+        >
           {submitting ? <LoadingSpinner /> : t("actions.submit")}
         </Button>
       </form>
@@ -305,7 +311,13 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
         />
 
         <div className="space-y-3">
-          <Button className="w-full" type="submit" disabled={submitting}>
+          <Button
+            data-umami-event="Edit Category"
+            data-umami-event-category={form.getValues("categoryName")}
+            className="w-full"
+            type="submit"
+            disabled={submitting}
+          >
             {submitting ? <LoadingSpinner /> : t("actions.submit")}
           </Button>
 

@@ -63,12 +63,17 @@ export function AccountSection() {
           </p>
         </div>
       </div>
-      <Button variant={"secondary"} onClick={() => signOut()}>
+      <Button
+        data-umami-event="Sign Out"
+        variant={"secondary"}
+        onClick={() => signOut()}
+      >
         {t("auth.logout")}
       </Button>
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button
+            data-umami-event="Delete Account"
             variant={"destructive"}
             onClick={() => setAcknowledged(false)}
           >
@@ -99,6 +104,7 @@ export function AccountSection() {
           <AlertDialogFooter>
             <AlertDialogCancel>{t("generic.nevermind")}</AlertDialogCancel>
             <Button
+              data-umami-event="Confirm Account Deletion"
               disabled={disabled}
               onClick={clearData}
               variant={"destructive"}

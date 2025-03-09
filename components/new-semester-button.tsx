@@ -172,6 +172,11 @@ export const NewSemesterButton = ({
             </span>
           )}
           <Button
+            data-umami-event="New Semester"
+            data-umami-event-export={exportData}
+            data-umami-event-archive={archiveData}
+            data-umami-event-keep-subjects={keepSubjects}
+            data-umami-event-keep-grades={keepGrades}
             variant={
               exportData || archiveData || keepGrades
                 ? "default"
@@ -263,6 +268,11 @@ export const NewSemesterButton = ({
             <Button variant="secondary">{t("actions.cancel")}</Button>
           </DialogClose>
           <Button
+            data-umami-event="New Semester"
+            data-umami-event-export={exportData}
+            data-umami-event-archive={archiveData}
+            data-umami-event-keep-subjects={keepSubjects}
+            data-umami-event-keep-grades={keepGrades}
             variant={
               exportData || archiveData || keepGrades
                 ? "default"

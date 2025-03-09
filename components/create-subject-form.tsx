@@ -144,7 +144,14 @@ export function CreateSubjectForm({
           )}
         />
 
-        <Button className="w-full" type="submit" disabled={submitting}>
+        <Button
+          data-umami-event="Create Subject"
+          data-umami-event-subject={form.getValues("subject")}
+          data-umami-event-relevant={form.getValues("showInOverview")}
+          className="w-full"
+          type="submit"
+          disabled={submitting}
+        >
           {submitting ? <LoadingSpinner /> : t("actions.submit")}
         </Button>
       </form>

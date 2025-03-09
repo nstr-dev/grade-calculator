@@ -12,6 +12,8 @@ export function FooterItem({
 }) {
   return (
     <Button
+      data-umami-event="Footer Link Navigation"
+      data-umami-event-to={href}
       className="transition-all opacity-80 hover:opacity-100"
       variant="link"
       asChild

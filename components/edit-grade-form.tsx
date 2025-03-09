@@ -362,7 +362,12 @@ export function EditGradeForm({
           )}
         />
 
-        <Button className="w-full" type="submit" disabled={submitting}>
+        <Button
+          data-umami-event="Edit Grade"
+          className="w-full"
+          type="submit"
+          disabled={submitting}
+        >
           {submitting ? <LoadingSpinner /> : t("actions.submit")}
         </Button>
       </form>
