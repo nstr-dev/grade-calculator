@@ -144,12 +144,14 @@ export function ViewArchiveButton() {
                   {isTiny ? (
                     <CardContent className="flex flex-row-reverse gap-3">
                       <Button
+                        data-umami-event="Download Archive"
                         size="icon"
                         onClick={() => handleDownload(data.id)}
                       >
                         <DownloadIcon className="size-4" />
                       </Button>
                       <Button
+                        data-umami-event="Delete Archive"
                         size="icon"
                         variant="secondary"
                         onClick={() => handleDelete(data.id)}
@@ -159,11 +161,15 @@ export function ViewArchiveButton() {
                     </CardContent>
                   ) : (
                     <CardContent className="flex flex-row-reverse gap-3">
-                      <Button onClick={() => handleDownload(data.id)}>
+                      <Button
+                        data-umami-event="Download Archive"
+                        onClick={() => handleDownload(data.id)}
+                      >
                         <DownloadIcon className="size-4 mr-2" />
                         {t("semesters.archive.download")}
                       </Button>
                       <Button
+                        data-umami-event="Delete Archive"
                         variant="secondary"
                         onClick={() => handleDelete(data.id)}
                       >
@@ -241,11 +247,15 @@ export function ViewArchiveButton() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="flex flex-row-reverse gap-3">
-                    <Button onClick={() => handleDownload(data.id)}>
+                    <Button
+                      data-umami-event="Download Archive"
+                      onClick={() => handleDownload(data.id)}
+                    >
                       <DownloadIcon className="size-4 mr-2" />
                       {t("semesters.archive.download")}
                     </Button>
                     <Button
+                      data-umami-event="Delete Archive"
                       variant="secondary"
                       onClick={() => handleDelete(data.id)}
                     >

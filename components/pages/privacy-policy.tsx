@@ -92,7 +92,12 @@ export default function PrivacyPolicy() {
         {t("privacy-policy.security.title")}
       </h2>
       <p>{t("privacy-policy.security.description")}</p>
-      <Button variant="secondary" className="w-fit self-center" asChild>
+      <Button
+        data-umami-event="Navigate to Legacy Version"
+        variant="secondary"
+        className="w-fit self-center"
+        asChild
+      >
         <Link href="https://legacy.grades.nstr.dev">
           {t("external.legacy-version")}
         </Link>

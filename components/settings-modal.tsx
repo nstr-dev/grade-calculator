@@ -326,6 +326,7 @@ export function SettingsModalForm({
 
         <Separator />
         <Button
+          data-umami-event="Save Preferences"
           disabled={passGtMax || passLtMin || maxLtMin || submitted}
           className="w-full"
           type="submit"
@@ -333,7 +334,12 @@ export function SettingsModalForm({
           {submitted ? <LoadingSpinner /> : t("actions.save")}
         </Button>
 
-        <Button className="w-full" variant="outline" onClick={onReset}>
+        <Button
+          data-umami-event="Reset Preferences"
+          className="w-full"
+          variant="outline"
+          onClick={onReset}
+        >
           {t("actions.reset")}
         </Button>
         <SheetClose asChild>
@@ -606,6 +612,7 @@ export function SettingsFormForOnboarding({
 
         <Separator />
         <Button
+          data-umami-event="Save Preferences"
           disabled={passGtMax || passLtMin || maxLtMin || submitted}
           className="w-full"
           type="submit"
@@ -620,7 +627,12 @@ export function SettingsFormForOnboarding({
           )}
         </Button>
 
-        <Button className="w-full" variant="outline" onClick={onReset}>
+        <Button
+          className="w-full"
+          variant="outline"
+          onClick={onReset}
+          data-umami-event="Reset Preferences"
+        >
           <RotateCcwIcon className="size-4 mr-2 text-muted-foreground" />
           {t("actions.reset")}
         </Button>
