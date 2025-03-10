@@ -136,8 +136,8 @@ export function SignInPageComponent() {
             </CardContent>
           </Card>
           {process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME && (
-            <span
-              className="text-center self-center cursor-pointer text-muted-foreground text-sm"
+            <button
+              className="text-muted-foreground text-sm"
               data-umami-event="Sign In"
               data-umami-event-provider={
                 process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME
@@ -147,7 +147,7 @@ export function SignInPageComponent() {
               }}
             >
               Log in with <b>{process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME}</b> SSO
-            </span>
+            </button>
           )}
         </>
       ) : (
