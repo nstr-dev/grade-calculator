@@ -20,14 +20,7 @@ import { Highlight } from "@/components/ui/card-stack";
 import { Separator } from "@/components/ui/separator";
 import { LoadingSpinner } from "@/components/ui/spinner";
 import { SiDiscord, SiGithub, SiGoogle } from "@icons-pack/react-simple-icons";
-import {
-  Bird,
-  Clock,
-  Container,
-  Globe,
-  MailCheck,
-  ShieldEllipsis,
-} from "lucide-react";
+import { Bird, Clock, Container, Globe, MailCheck } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -76,8 +69,8 @@ export function SignInPageComponent() {
               <CardDescription>{t("auth.sign-in-desc")}</CardDescription>
             </CardHeader>
             <CardContent className="gap-4 flex flex-col">
-              {(process.env.NODE_ENV === "development" ||
-                process.env.NEXT_PUBLIC_MOCK_OAUTH_WELLKNOWN_URL) && (
+              {process.env.NODE_ENV === "development" ||
+              process.env.NEXT_PUBLIC_MOCK_OAUTH_WELLKNOWN_URL ? (
                 <Button
                   variant={"secondary"}
                   className="w-full"
@@ -90,56 +83,44 @@ export function SignInPageComponent() {
                   <Container className="mr-2 size-4" />
                   {t("auth.providers.local")}
                 </Button>
+              ) : (
+                <>
+                  <Button
+                    className="w-full"
+                    data-umami-event="Sign In"
+                    data-umami-event-provider="Discord"
+                    onClick={() => {
+                      signIn("discord");
+                    }}
+                  >
+                    <SiDiscord className="mr-2 size-4" />
+                    {t("auth.providers.discord")}
+                  </Button>
+                  <Button
+                    className="w-full"
+                    data-umami-event="Sign In"
+                    data-umami-event-provider="GitHub"
+                    onClick={() => {
+                      signIn("github");
+                    }}
+                  >
+                    <SiGithub className="mr-2 size-4" />
+                    {t("auth.providers.github")}
+                  </Button>
+                  <Button
+                    className="w-full"
+                    onClick={() => {
+                      signIn("google");
+                    }}
+                  >
+                    <SiGoogle className="mr-2 size-4" />
+                    {t("auth.providers.google")}
+                  </Button>
+                  <Separator />
+                  <EmailLoginForm />
+                </>
               )}
-              {process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME && (
-                <Button
-                  variant={"secondary"}
-                  className="w-full"
-                  data-umami-event="Sign In"
-                  data-umami-event-provider={
-                    process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME
-                  }
-                  onClick={() => {
-                    signIn("custom");
-                  }}
-                >
-                  <ShieldEllipsis className="m-2 size-4" />
-                  {process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME}
-                </Button>
-              )}
-              <Button
-                className="w-full"
-                data-umami-event="Sign In"
-                data-umami-event-provider="Discord"
-                onClick={() => {
-                  signIn("discord");
-                }}
-              >
-                <SiDiscord className="mr-2 size-4" />
-                {t("auth.providers.discord")}
-              </Button>
-              <Button
-                className="w-full"
-                data-umami-event="Sign In"
-                data-umami-event-provider="GitHub"
-                onClick={() => {
-                  signIn("github");
-                }}
-              >
-                <SiGithub className="mr-2 size-4" />
-                {t("auth.providers.github")}
-              </Button>
-              <Button
-                className="w-full"
-                onClick={() => {
-                  signIn("google");
-                }}
-              >
-                <SiGoogle className="mr-2 size-4" />
-                {t("auth.providers.google")}
-              </Button>
-              <Separator />
-              <EmailLoginForm />
+
               <Separator />
               <CardDescription>{t("auth.legacy.description")}</CardDescription>
               <Button
@@ -154,6 +135,20 @@ export function SignInPageComponent() {
               </Button>
             </CardContent>
           </Card>
+          {process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME && (
+            <button
+              className="text-muted-foreground text-sm"
+              data-umami-event="Sign In"
+              data-umami-event-provider={
+                process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME
+              }
+              onClick={() => {
+                signIn("custom");
+              }}
+            >
+              Log in with <b>{process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME}</b> SSO
+            </button>
+          )}
         </>
       ) : (
         <Card className="transition-all">
