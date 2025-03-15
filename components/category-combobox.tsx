@@ -61,7 +61,7 @@ export function CategoryComboBox({ className }: { className?: string }) {
   }
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
+    <Drawer repositionInputs={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger
         asChild
         className={cn("w-[150px] justify-between", className)}
