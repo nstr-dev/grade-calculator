@@ -97,7 +97,7 @@ export const NewSemesterButton = ({
   };
 
   return isMobile ? (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+    <Drawer repositionInputs={false} open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
         <Button
           className="w-full flex-1 flex-shrink-0 gap-2"

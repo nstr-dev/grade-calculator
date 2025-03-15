@@ -166,7 +166,7 @@ export function GradesForSubject({
       <CardHeader>
         <CardTitle>{t("grades.all-grades")}</CardTitle>
         <CardDescription>{t("grades.all-grades-desc")}</CardDescription>
-        <Drawer open={open} onOpenChange={setOpen}>
+        <Drawer repositionInputs={false} open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
             <Button>{t("grades.add")}</Button>
           </DrawerTrigger>
@@ -198,7 +198,11 @@ export function GradesForSubject({
             </AlertDescription>
           </Alert>
         ) : (
-          <Drawer open={editOpen} onOpenChange={setEditOpen}>
+          <Drawer
+            repositionInputs={false}
+            open={editOpen}
+            onOpenChange={setEditOpen}
+          >
             <DrawerContent>
               <DrawerHeader className="text-left">
                 <DrawerTitle>{t("grades.edit.title")}</DrawerTitle>
