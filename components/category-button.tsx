@@ -37,7 +37,7 @@ export function CategoryButton({ action }: { action: "create" | "edit" }) {
 
   if (action === "create")
     return isMobile ? (
-      <Drawer open={open} onOpenChange={setOpen}>
+      <Drawer repositionInputs={false} open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>
           <Button variant={"outline"} size={"icon"}>
             <FolderPlus className="size-4" />
@@ -78,7 +78,7 @@ export function CategoryButton({ action }: { action: "create" | "edit" }) {
     );
   if (action === "edit")
     return isMobile ? (
-      <Drawer open={open} onOpenChange={setOpen}>
+      <Drawer repositionInputs={false} open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>
           <Button size={"icon"} variant={"outline"}>
             <FolderPen className="size-4" />

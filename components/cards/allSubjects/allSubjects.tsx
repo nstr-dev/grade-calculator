@@ -206,7 +206,7 @@ export function AllSubjects({
       <CardHeader>
         <CardTitle>{t("subjects.all-subjects")}</CardTitle>
         <CardDescription>{t("subjects.all-subjects-desc")}</CardDescription>
-        <Drawer open={open} onOpenChange={setOpen}>
+        <Drawer repositionInputs={false} open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
             <Button variant="secondary">{t("subjects.add")}</Button>
           </DrawerTrigger>
@@ -225,7 +225,11 @@ export function AllSubjects({
         </Drawer>
       </CardHeader>
       <CardContent>
-        <Drawer open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
+        <Drawer
+          repositionInputs={false}
+          open={deleteConfirmOpen}
+          onOpenChange={setDeleteConfirmOpen}
+        >
           <DrawerContent>
             <DrawerHeader className="text-left">
               <DrawerTitle>{t("subjects.delete.prompt")}</DrawerTitle>
@@ -266,7 +270,11 @@ export function AllSubjects({
               </AlertDescription>
             </Alert>
           ) : (
-            <Drawer open={editOpen} onOpenChange={setEditOpen}>
+            <Drawer
+              repositionInputs={false}
+              open={editOpen}
+              onOpenChange={setEditOpen}
+            >
               <DrawerContent className="sm:max-w-[425px]">
                 <DrawerHeader>
                   <DrawerTitle>{t("subjects.actions.edit-title")}</DrawerTitle>
