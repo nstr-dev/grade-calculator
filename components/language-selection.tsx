@@ -91,7 +91,7 @@ export function LanguageSelection({
   }
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
+    <Drawer repositionInputs={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger
         asChild
         className={cn("w-full justify-between", className)}

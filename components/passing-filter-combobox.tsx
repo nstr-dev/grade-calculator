@@ -53,7 +53,7 @@ export function PassingFilterComboBox({
   }
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
+    <Drawer repositionInputs={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button variant="outline" className="w-fit justify-end">
           {selectedStatus?.icon && selectedStatus.icon}
