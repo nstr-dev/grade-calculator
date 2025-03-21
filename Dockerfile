@@ -1,13 +1,24 @@
 FROM node:18-alpine
 
-RUN apk add --no-cache libc6-compat bash curl && curl -1sLf \
-'https://dl.cloudsmith.io/public/infisical/infisical-cli/setup.alpine.sh' | bash \
-&& apk add infisical=0.36.18
+ARG INFISICAL_API_URL
+ARG INFISICAL_SECRET_ENV
+ARG PROJECT_ID
+ARG INFISICAL_MACHINE_CLIENT_ID
+ARG INFISICAL_MACHINE_CLIENT_SECRET
+
+ENV INFISICAL_API_URL=${INFISICAL_API_URL}
+ENV INFISICAL_SECRET_ENV=${INFISICAL_SECRET_ENV}
+ENV PROJECT_ID=${PROJECT_ID}
+ENV INFISICAL_MACHINE_CLIENT_ID=${INFISICAL_MACHINE_CLIENT_ID}
+ENV INFISICAL_MACHINE_CLIENT_SECRET=${INFISICAL_MACHINE_CLIENT_SECRET}
 
 WORKDIR /app
 COPY / /app
 
-RUN npm ci && npm run build;
+RUN apk add --no-cache libc6-compat bash curl && curl -1sLf \
+'https://dl.cloudsmith.io/public/infisical/infisical-cli/setup.alpine.sh' | bash \
+&& apk add infisical=0.36.18 && chmod +x ./run.sh \
+&& npm ci && npm run build;
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
@@ -15,4 +26,4 @@ ENV NEXT_TELEMETRY_DISABLED=1
 EXPOSE 3000
 ENV PORT=3000
 
-CMD ["./run.sh"]
+CMD ["bash", "./run.sh"]
