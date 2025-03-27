@@ -109,6 +109,8 @@ export function SignInPageComponent() {
                   </Button>
                   <Button
                     className="w-full"
+                    data-umami-event="Sign In"
+                    data-umami-event-provider="Google"
                     onClick={() => {
                       signIn("google");
                     }}
