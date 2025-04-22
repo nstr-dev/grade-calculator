@@ -171,7 +171,7 @@ export function TemplateSelector({
           </Button>
           <Link
             target="_blank"
-            href="https://github.com/noahstreller/grade-calculator/issues/new/choose"
+            href="https://github.com/nstr-dev/grade-calculator/issues/new/choose"
           >
             <Button
               data-umami-event="Request template"
