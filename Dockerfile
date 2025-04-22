@@ -9,7 +9,7 @@ ENV NEXT_PUBLIC_CUSTOM_OAUTH_NAME=${NEXT_PUBLIC_CUSTOM_OAUTH_NAME}
 WORKDIR /app
 COPY / /app
 
-RUN apk add --no-cache bash curl libc6-compat && curl -1sLf \
+RUN apk add --no-cache bash curl libc6-compat && curl -1sLf --proto "=https" \
 'https://dl.cloudsmith.io/public/infisical/infisical-cli/setup.alpine.sh' | bash \
 && apk add --no-cache infisical=0.36.18 && chmod +x ./run.sh \
 && npm ci && npm run build;
