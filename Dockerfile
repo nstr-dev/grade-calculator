@@ -1,16 +1,23 @@
 FROM node:18-alpine
 
-RUN apk add --no-cache libc6-compat
+ARG NEXT_PUBLIC_MOCK_OAUTH_WELLKNOWN_URL
+ARG NEXT_PUBLIC_CUSTOM_OAUTH_NAME
+
+ENV NEXT_PUBLIC_MOCK_OAUTH_WELLKNOWN_URL=${NEXT_PUBLIC_MOCK_OAUTH_WELLKNOWN_URL}
+ENV NEXT_PUBLIC_CUSTOM_OAUTH_NAME=${NEXT_PUBLIC_CUSTOM_OAUTH_NAME}
 
 WORKDIR /app
 COPY / /app
 
-RUN npm ci && npm run build;
+RUN apk add --no-cache bash curl libc6-compat && curl -1sLf --proto "=https" \
+'https://dl.cloudsmith.io/public/infisical/infisical-cli/setup.alpine.sh' | bash \
+&& apk add --no-cache infisical=0.36.18 && chmod +x ./run.sh \
+&& npm ci && npm run build;
 
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
 EXPOSE 3000
-ENV PORT 3000
+ENV PORT=3000
 
-CMD ["npm", "start"]
+CMD ["bash", "./run.sh"]
