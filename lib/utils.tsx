@@ -125,9 +125,9 @@ export function getDefaultPreferences(): Preferences {
     gradeDecimals: 3,
     newEntitySheetShouldStayOpen: false,
     passingInverse: false,
-    passingGrade: 4,
-    minimumGrade: 1,
-    maximumGrade: 6,
+    passingGrade: 50,
+    minimumGrade: 0,
+    maximumGrade: 100,
     id: 0,
     userId: null,
   } satisfies NewPreferences;

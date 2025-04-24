@@ -30,7 +30,6 @@ import {
   ClearDataTranslations,
   PreferencesTranslations,
 } from "@/lib/translationObjects";
-import { getDefaultPreferences } from "@/lib/utils";
 import { templates } from "@/templates";
 import { RotateCcwIcon, SaveIcon, Settings, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -105,7 +104,7 @@ export function SettingsModalForm({
 
   function onReset(event: any) {
     event.preventDefault();
-    form.reset(getDefaultPreferences() as any);
+    form.reset(preferences.preferences as any);
   }
 
   useEffect(() => {
