@@ -1,7 +1,7 @@
+import { logger } from "@/lib/logger";
 import { toastProblem } from "@/lib/toasts";
 import { Empty } from "@/types/types";
 import { signOut } from "next-auth/react";
-import { pino } from "pino";
 
 export type Problem = {
   errorMessage?: string | Empty;
@@ -29,7 +29,7 @@ export function getProblem(problem: Problem): Problem {
   const finalMessage = errorMessages[problem.errorCode as ErrorCode];
   problem = { ...problem, finalMessage };
   // console.warn(problem);
-  pino().error(problem);
+  logger.error(problem);
 
   return problem;
 }

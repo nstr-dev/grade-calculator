@@ -9,7 +9,6 @@ export default {
   out: "./drizzle",
   dialect: "postgresql",
   dbCredentials: {
-    url:
-      process.env.POSTGRES_URL ?? "postgres://admin:admin@localhost/verceldb",
+    url: process.env.POSTGRES_URL ?? "postgres://admin:admin@localhost/grades",
   },
 } satisfies Config;

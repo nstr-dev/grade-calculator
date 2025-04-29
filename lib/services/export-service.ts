@@ -8,6 +8,7 @@ import {
   Preferences,
   Subject,
 } from "@/db/schema";
+import { logger } from "@/lib/logger";
 import { catchProblem } from "@/lib/problem";
 import { insertArchivedata } from "@/lib/services/archive-service";
 import {
@@ -23,7 +24,6 @@ import {
   getAllSubjects,
   getSubjectIdElseAdd,
 } from "@/lib/services/subject-service";
-import pino from "pino";
 
 import zlib from "zlib";
 
@@ -94,7 +94,7 @@ export async function archiveCategory(data: ExportableData): Promise<string> {
       let result = buffer.toString("base64");
       await insertArchivedata(result, data.category);
     } else {
-      pino().error(err);
+      logger.error(err);
     }
   });
   return "Category archived";
