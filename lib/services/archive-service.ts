@@ -10,12 +10,12 @@ import {
   insertArchivedataIntoDb,
 } from "@/lib/repositories/archive-repo";
 import { getUserId } from "@/lib/services/service-util";
-import pino from "pino";
 
+import { logger } from "@/lib/logger";
 export async function getAllArchivedata(): Promise<ArchiveData[] | Problem> {
   try {
     const userId = await getUserId();
-    pino().debug("Getting all archive data for user=" + userId);
+    logger.debug("Getting all archive data for user=" + userId);
     return await getAllArchivedataFromDb(userId);
   } catch (e: any) {
     return getProblem({
@@ -31,7 +31,7 @@ export async function getArchivedataById(
 ): Promise<ArchiveData | Problem> {
   try {
     const userId = await getUserId();
-    pino().debug("Getting archive data by id=" + id + " for user=" + userId);
+    logger.debug("Getting archive data by id=" + id + " for user=" + userId);
     return await getArchivedataByIdFromDb(id, userId);
   } catch (e: any) {
     return getProblem({
@@ -45,7 +45,7 @@ export async function getArchivedataById(
 export async function getArchiveCount(): Promise<number | Problem> {
   try {
     const userId = await getUserId();
-    pino().debug("Getting archive count for user=" + userId);
+    logger.debug("Getting archive count for user=" + userId);
     return await getArchiveCountFromDb(userId);
   } catch (e: any) {
     return getProblem({
@@ -66,7 +66,7 @@ export async function insertArchivedata(
     if (currentCount >= 8) {
       throw new Error("Maximum number of archives reached");
     }
-    pino().info(
+    logger.info(
       "Inserting compressed archive data=" + data + " for user=" + userId
     );
     return await insertArchivedataIntoDb(data, category, userId);
@@ -84,7 +84,7 @@ export async function deleteArchivedata(
 ): Promise<ArchiveData | Problem> {
   try {
     const userId = await getUserId();
-    pino().info("Deleting archive data by id=" + id + " for user=" + userId);
+    logger.info("Deleting archive data by id=" + id + " for user=" + userId);
     return await deleteArchivedataFromDb(id, userId);
   } catch (e: any) {
     return getProblem({

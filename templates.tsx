@@ -36,7 +36,7 @@ export const templates: PreferenceTemplate[] = [
     id: "percentage",
     icon: "%",
     title: "Percentage",
-    passingGrade: 50,
+    passingGrade: 60,
     minimumGrade: 0,
     maximumGrade: 100,
     passingInverse: false,

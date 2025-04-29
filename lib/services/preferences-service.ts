@@ -1,5 +1,6 @@
 "use server";
 import { Grade, NewPreferences, Preferences } from "@/db/schema";
+import { logger } from "@/lib/logger";
 import { Problem, catchProblem, getProblem } from "@/lib/problem";
 import {
   addPreferencesToDb,
@@ -9,12 +10,11 @@ import {
 import { getAllGrades, updateGrade } from "@/lib/services/grade-service";
 import { getUserId, setUserId } from "@/lib/services/service-util";
 import { getDefaultPreferences } from "@/lib/utils";
-import pino from "pino";
 
 export async function getPreferences(): Promise<Preferences[] | Problem> {
   try {
     const userId = await getUserId();
-    pino().debug("Getting preferences for user=" + userId);
+    logger.debug("Getting preferences for user=" + userId);
     return await getPreferencesFromDb(userId);
   } catch (e: any) {
     return getProblem({
@@ -32,12 +32,12 @@ export async function getPreferencesElseGetDefault(): Promise<
     const userId = await getUserId();
     let result = await getPreferencesFromDb(userId);
     if (result.length === 1) {
-      pino().debug(
+      logger.debug(
         "Getting preferences=" + result[0].id + " for user=" + userId
       );
       return { preferences: result[0], isDefault: false };
     }
-    pino().debug("Getting default preferences for user=" + userId);
+    logger.debug("Getting default preferences for user=" + userId);
     return { preferences: getDefaultPreferences(), isDefault: true };
   } catch (e: any) {
     return getProblem({
@@ -57,7 +57,7 @@ export async function savePreferences(
     let existing: Preferences[] = catchProblem(await getPreferences());
     if (existing.length > 0) {
       newPreferences.id = existing[0].id;
-      pino().info(
+      logger.info(
         "Updating preferences=" +
           existing[0].id +
           " for user=" +
@@ -65,7 +65,7 @@ export async function savePreferences(
       );
       return await updatePreferencesInDb(newPreferences);
     }
-    pino().info("Adding new preferences for user=" + newPreferences.userId);
+    logger.info("Adding new preferences for user=" + newPreferences.userId);
     return await addPreferencesToDb(newPreferences);
   } catch (e: any) {
     return getProblem({
@@ -91,7 +91,7 @@ export async function adjustGradesToPreferences(preferences: Preferences) {
         wasModified = true;
       }
       if (wasModified) {
-        pino().info("Adjusting grade=" + grade.id + " to new preferences");
+        logger.info("Adjusting grade=" + grade.id + " to new preferences");
         updateGrade(modifiedGrade);
       }
     });

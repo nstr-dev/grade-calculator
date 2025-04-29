@@ -1,5 +1,6 @@
 "use server";
 import { Grade, GradeWithSubject, NewGrade, Subject } from "@/db/schema";
+import { logger } from "@/lib/logger";
 import { Problem, catchProblem, getProblem } from "@/lib/problem";
 import {
   addGradeToDb,
@@ -19,14 +20,13 @@ import {
   getSubjectByIdByNameBySubject,
 } from "@/lib/services/subject-service";
 import { Average, AverageWithSubject } from "@/types/types";
-import pino from "pino";
 
 export async function getAllGrades(
   categoryId?: number | undefined
 ): Promise<Grade[] | Problem> {
   try {
     const userId = await getUserId();
-    pino().debug("Getting all grades for user=" + userId);
+    logger.debug("Getting all grades for user=" + userId);
     return await getAllGradesFromDb(userId, categoryId);
   } catch (e: any) {
     return getProblem({
@@ -42,7 +42,7 @@ export async function getAllGradesWithSubject(
 ): Promise<GradeWithSubject[] | Problem> {
   try {
     const userId = await getUserId();
-    pino().debug("Getting all grades with subjects for user=" + userId);
+    logger.debug("Getting all grades with subjects for user=" + userId);
     return await getAllGradesWithSubjectFromDb(userId, categoryId);
   } catch (e: any) {
     return getProblem({
@@ -59,7 +59,7 @@ export async function getGradesBySubject(
 ): Promise<Grade[] | Problem> {
   try {
     const userId = await getUserId();
-    pino().debug(
+    logger.debug(
       "Getting grades for subject=" + subject + " for user=" + userId
     );
     return await getGradesBySubjectFromDb(subject, userId, categoryId);
@@ -79,14 +79,14 @@ export async function getGradesBySubjectWithSubject(
   try {
     const userId = await getUserId();
     if (typeof subject === "object") {
-      pino().debug(
+      logger.debug(
         "Getting grades with subjects for subject=" +
           subject.id +
           " for user=" +
           userId
       );
     } else {
-      pino().debug(
+      logger.debug(
         "Getting grades with subjects for subject=" +
           subject +
           " for user=" +
@@ -160,14 +160,14 @@ export async function getGradeAverageWithSubjectBySubject(
     };
 
     if (typeof subject === "object") {
-      pino().debug(
+      logger.debug(
         "Getting grade average with subject for subject=" +
           subject.id +
           " for user=" +
           userId
       );
     } else {
-      pino().debug(
+      logger.debug(
         "Getting grade average with subject for subject=" +
           subject +
           " for user=" +
@@ -217,14 +217,14 @@ export async function getGradeAverageBySubject(
       };
     };
     if (typeof subject === "object") {
-      pino().debug(
+      logger.debug(
         "Getting grade average for subject=" +
           subject.id +
           " for user=" +
           userId
       );
     } else {
-      pino().debug(
+      logger.debug(
         "Getting grade average for subject=" + subject + " for user=" + userId
       );
     }
@@ -254,7 +254,7 @@ export async function getAllGradeAverages(
       return averages;
     };
 
-    pino().debug("Getting all grade averages for category=" + categoryId);
+    logger.debug("Getting all grade averages for category=" + categoryId);
 
     return average();
   } catch (e: any) {
@@ -284,7 +284,7 @@ export async function getAllGradeAveragesWithSubject(
       return averages;
     };
 
-    pino().debug(
+    logger.debug(
       "Getting all grade averages with subjects for category=" + categoryId
     );
 
@@ -302,7 +302,7 @@ export async function addGrade(newGrade: NewGrade): Promise<number | Problem> {
   try {
     const userId = await getUserId();
     newGrade = await setUserId(newGrade);
-    pino().info(
+    logger.info(
       "Adding grade=" +
         newGrade.value +
         " in subject=" +
@@ -326,7 +326,7 @@ export async function deleteGradeByGrade(
 ): Promise<number | Problem> {
   try {
     const userId = await getUserId();
-    pino().info("Deleting grade=" + grade.id + " for user=" + userId);
+    logger.info("Deleting grade=" + grade.id + " for user=" + userId);
     return catchProblem(await deleteGradeFromDb(grade, userId));
   } catch (e: any) {
     return getProblem({
@@ -343,7 +343,7 @@ export async function deleteGradeById(
 ): Promise<number | Problem> {
   try {
     const userId = await getUserId();
-    pino().info("Deleting grade by id=" + gradeId + " for user=" + userId);
+    logger.info("Deleting grade by id=" + gradeId + " for user=" + userId);
     return catchProblem(await deleteGradeByIdFromDb(gradeId, userId));
   } catch (e: any) {
     return getProblem({
@@ -358,7 +358,7 @@ export async function deleteGradeById(
 export async function updateGrade(grade: Grade): Promise<number | Problem> {
   try {
     const userId = await getUserId();
-    pino().info("Updating grade=" + grade.id + " for user=" + userId);
+    logger.info("Updating grade=" + grade.id + " for user=" + userId);
     return catchProblem(await updateGradeInDb(grade, userId));
   } catch (e: any) {
     return getProblem({
