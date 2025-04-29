@@ -1,7 +1,7 @@
 "use server";
 import { NewGrade, NewPreferences, NewSubject } from "@/db/schema";
 import { auth } from "@/lib/auth";
-import pino from "pino";
+import { logger } from "@/lib/logger";
 
 export const getUser = async () => {
   const session = await auth();
@@ -13,7 +13,7 @@ export const getUserId = async (): Promise<string> => {
   if (uid) return uid;
 
   const error: any = new Error("Not authorized");
-  pino().error("Not authorized");
+  logger.error("Not authorized");
   error.code = "GC401";
   throw error;
 };
