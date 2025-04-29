@@ -104,7 +104,7 @@ export function SettingsModalForm({
 
   function onReset(event: any) {
     event.preventDefault();
-    form.reset(preferences.preferences as any);
+    form.reset(defaultValues as any);
   }
 
   useEffect(() => {
