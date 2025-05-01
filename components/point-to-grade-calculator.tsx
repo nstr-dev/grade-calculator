@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { getGradeFromPointsWithBestGradeAtPercentage } from "@/lib/services/notAsyncLogic";
 import { CalculatorIcon, XIcon, ZapIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { ControllerRenderProps } from "react-hook-form";
 import { Asterisk } from "./ui/asterisk";
@@ -70,6 +71,9 @@ export function PointToGradeCalculator({
       maxPoints < 0
     );
   }
+
+  const t = useTranslations();
+
   return showPointCalc ? (
     <div
       className="flex flex-col gap-2 p-3 border-4 rounded-xl"
@@ -83,7 +87,7 @@ export function PointToGradeCalculator({
       <div className="flex flex-row gap-2">
         <div>
           <Label htmlFor="point_calc_points">
-            Achieved Points
+            {t("grades.point-calculator.achieved-points")}
             <Asterisk className="ml-1" />
           </Label>
           <Input
@@ -95,12 +99,12 @@ export function PointToGradeCalculator({
             }}
             type="number"
             step="any"
-            placeholder="Points"
+            placeholder={t("grades.point-calculator.enter-number")}
           />
         </div>
         <div>
           <Label htmlFor="point_calc_max_points">
-            Maximum Points
+            {t("grades.point-calculator.maximum-points")}
             <Asterisk className="ml-1" />
           </Label>
           <Input
@@ -112,25 +116,28 @@ export function PointToGradeCalculator({
             }}
             type="number"
             step="any"
-            placeholder="Max Points"
+            placeholder={t("grades.point-calculator.enter-number")}
           />
         </div>
       </div>
 
       <div>
         <Label htmlFor="point_calc_percentage">
-          Percentage needed for best grade
+          {t("grades.point-calculator.percentage-needed-for-best-grade")}
         </Label>
         <div className="w-full flex flex-row gap-2 items-center">
           <Input
             value={bestGradeAtPercentage}
             onChange={(e) => {
               if (e.target.value === "") setBestGradeAtPercentage(undefined);
+              else if (Number(e.target.value) > 100)
+                setBestGradeAtPercentage(100);
+              else if (Number(e.target.value) < 0) setBestGradeAtPercentage(0);
               else setBestGradeAtPercentage(Number(e.target.value));
             }}
             type="number"
             step="5"
-            placeholder="Defaults to 100%"
+            placeholder={t("grades.point-calculator.defaults-to-100")}
           />{" "}
           %
         </div>
@@ -146,7 +153,7 @@ export function PointToGradeCalculator({
           }}
         >
           <ZapIcon className="mr-2 size-4" />
-          Calculate
+          {t("actions.calculate")}
         </Button>
         <Button
           onClick={() => setShowPointCalc(false)}
@@ -154,7 +161,7 @@ export function PointToGradeCalculator({
           variant="outline"
         >
           <XIcon className="mr-2 size-4" />
-          Close
+          {t("actions.close")}
         </Button>
       </div>
     </div>
@@ -167,7 +174,7 @@ export function PointToGradeCalculator({
         variant="secondary"
       >
         <CalculatorIcon className="mr-2 size-4" />
-        Point Calculator
+        {t("grades.point-calculator.point-calculator")}
       </Button>
     </div>
   );
