@@ -26,19 +26,8 @@ async function runMigrations() {
     logger.debug("Database migrations applied successfully");
   } catch (error) {
     logger.error("Database migration failed:", error);
-    // re-throw so the process exits or your hosting platform can restart it
     throw error;
   }
 }
 
-// trigger migrations immediately
-(async () => {
-  try {
-    await runMigrations();
-  } catch (error) {
-    logger.error("Failed to run migrations during initialization:", error);
-    process.exit(1); // Exit the process to signal failure
-  }
-})();
-
-export { db };
+export { db, runMigrations };
