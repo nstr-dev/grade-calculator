@@ -74,7 +74,15 @@
     "add": "Note hinzufügen",
     "add-desc": "Füge eine neue Note zur Liste hinzu",
     "show-passing-grades": "<green>Bestehende</green> Fächer",
-    "simulatedGoal-description": "Falls du die erforderliche Note für ein anderes Ergebnis als die bestandene Note überprüfen willst, gib das Zielergebnis hier ein."
+    "simulatedGoal-description": "Falls du die erforderliche Note für ein anderes Ergebnis als die bestandene Note überprüfen willst, gib das Zielergebnis hier ein.",
+    "point-calculator": {
+      "enter-number": "Zahl eingeben",
+      "achieved-points": "Erreichte Punkte",
+      "maximum-points": "Max. Punktzahl",
+      "percentage-needed-for-best-grade": "Punkte-Prozentsatz für Bestnote",
+      "defaults-to-100": "Standardmässig 100%",
+      "point-calculator": "Punkterechner"
+    }
   },
   "landing-page": {
     "about": {
@@ -310,7 +318,9 @@
     "save": "Speichern",
     "submit": "Absenden",
     "undo": "Rückgängig",
-    "acknowledge": "Ich hab's verstanden"
+    "acknowledge": "Ich hab's verstanden",
+    "calculate": "Berechnen",
+    "close": "Schliessen"
   },
   "app": {
     "description": "Ein einfacher Notenrechner für Schüler und Studenten.",

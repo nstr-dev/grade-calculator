@@ -39,7 +39,15 @@
     "description-prompt": "Add a short description (optional)",
     "date-prompt": "Pick a date (optional)",
     "show-passing-grades": "Show <green>passing</green> grades",
-    "simulatedGoal-description": "In case you want to check the required grade for a result other than the passing grade, you can apply the goal result here."
+    "simulatedGoal-description": "In case you want to check the required grade for a result other than the passing grade, you can apply the goal result here.",
+    "point-calculator": {
+      "achieved-points": "Achieved Points",
+      "enter-number": "Enter number",
+      "maximum-points": "Maximum Points",
+      "percentage-needed-for-best-grade": "Percentage needed for best grade",
+      "defaults-to-100": "Defaults to 100%",
+      "point-calculator": "Point Calculator"
+    }
   },
   "subjects": {
     "subject": "Subject",
@@ -141,7 +149,9 @@
     "clear-account-data": "Delete all account data",
     "acknowledge": "I acknowledge",
     "clear-account-data-warning": "Are you sure that you want to delete all of your account data? This action cannot be undone. You will still be able to register again with the same social login provider or email.",
-    "clear-grades-only": "Clear grades only"
+    "clear-grades-only": "Clear grades only",
+    "calculate": "Calculate",
+    "close": "Close"
   },
   "themes": {
     "toggle": "Change Theme",

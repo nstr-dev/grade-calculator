@@ -19,11 +19,13 @@
     ],
     "components\\language-selection.tsx": [
       "locale=${\r\n      selected?.key ?? \"en\"\r\n    }; expires=Fri, 31 Dec 9999 23:59:59 GMT"
-    ]
+    ],
+    "components/point-to-grade-calculator.tsx": ["Enter", "%"]
   },
   "i18n-ally.extract.ignored": [
     "${truncatedGrade} ${\r\n            hideText\r\n              ? \"\"\r\n              : t(\"grades.grades\", { count: average.average?.gradeAmount })\r\n          }",
-    "Noah"
+    "Noah",
+    "\n          %\n        "
   ],
   "sonarlint.connectedMode.project": {
     "connectionId": "https-sonarqube-cloud-nstr-dev",

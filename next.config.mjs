@@ -12,5 +12,8 @@ const withSerwist = withSerwistInit({
 export default withSerwist(
   withNextIntl({
     reactStrictMode: false,
+    experimental: {
+      instrumentationHook: true,
+    },
   })
 );

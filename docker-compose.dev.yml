@@ -23,6 +23,7 @@ services:
       - 8080:8080
 
   umami-db:
+    profiles: [analytics]
     container_name: umami-db
     volumes:
       - "umami:/var/lib/postgresql/data"
@@ -41,6 +42,7 @@ services:
       timeout: 2s
 
   umami-web:
+    profiles: [analytics]
     image: docker.umami.is/umami-software/umami:postgresql-latest
     container_name: umami
     ports:

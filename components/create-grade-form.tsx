@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { useCategory } from "@/components/category-provider";
+import { PointToGradeCalculator } from "@/components/point-to-grade-calculator";
 import { usePreferences } from "@/components/preferences-provider";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -62,6 +63,8 @@ export function CreateGradeForm({
   const [date, setDate] = useState<Date | undefined>();
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+
+  const [showPointCalc, setShowPointCalc] = useState<boolean>(false);
 
   const maxLengthDescription = 255;
 
@@ -229,6 +232,7 @@ export function CreateGradeForm({
                 <Input
                   type="number"
                   step="any"
+                  disabled={showPointCalc}
                   placeholder={t("grades.add-placeholder")}
                   {...field}
                   onChange={(e) => {
@@ -238,6 +242,11 @@ export function CreateGradeForm({
                 />
               </FormControl>
               <FormMessage />
+              <PointToGradeCalculator
+                showPointCalc={showPointCalc}
+                setShowPointCalc={setShowPointCalc}
+                field={field}
+              />
             </FormItem>
           )}
         />
