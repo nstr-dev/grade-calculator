@@ -15,9 +15,9 @@ type GradeFormField =
       {
         grade: number;
         subject: number;
-        description?: string | undefined;
-        weight?: number | undefined;
-        date?: Date | undefined;
+        description?: string;
+        weight?: number;
+        date?: Date;
       },
       "grade"
     >
@@ -27,7 +27,7 @@ type GradeFormField =
         weight: number;
         grade: number;
         subject: number;
-        description?: string | undefined;
+        description?: string;
       },
       "grade"
     >;
@@ -53,10 +53,11 @@ export function PointToGradeCalculator({
     if (isPointCalculationInvalid()) return;
     field.onChange(
       getGradeFromPointsWithBestGradeAtPercentage(
-        points!,
-        maxPoints!,
+        //@ts-expect-error
+        points,
+        maxPoints,
         bestGradeAtPercentage ?? 100,
-        preferences!
+        preferences
       )
     );
   }
