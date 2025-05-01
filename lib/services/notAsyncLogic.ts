@@ -150,3 +150,42 @@ export function importFromText(
     importFailedToast();
   }
 }
+
+export function getGradeFromPoints(
+  points: number,
+  maxPoints: number,
+  preferences: Preferences
+): number {
+  if (!preferences.maximumGrade || !preferences.minimumGrade) return 0;
+
+  const percentage = (100 / maxPoints) * points;
+  const gradeSpread = preferences.maximumGrade - preferences.minimumGrade;
+  const percentageFactor = gradeSpread / 100;
+
+  const grade = preferences.passingInverse
+    ? preferences.maximumGrade - percentage * percentageFactor
+    : preferences.minimumGrade + percentage * percentageFactor;
+
+  return grade;
+}
+
+export function getGradeFromPointsWithBestGradeAtPercentage(
+  points: number,
+  maxPoints: number,
+  bestGradeAtPercentage: number,
+  preferences: Preferences
+): number {
+  if (preferences.maximumGrade == null || preferences.minimumGrade == null)
+    return 0;
+  const percentage = points === maxPoints ? 100 : (100 / maxPoints) * points;
+  const cappedPercentage = Math.min(percentage, bestGradeAtPercentage);
+  const ratio = cappedPercentage / bestGradeAtPercentage;
+
+  const gradeSpread = preferences.maximumGrade - preferences.minimumGrade;
+
+  const grade = preferences.passingInverse
+    ? preferences.maximumGrade - ratio * gradeSpread
+    : preferences.minimumGrade + ratio * gradeSpread;
+
+  return grade;
+}
