@@ -5,13 +5,11 @@ import { migrate } from "drizzle-orm/postgres-js/migrator";
 import postgres from "postgres";
 
 declare global {
-  // avoids “too many clients” by re-using the same db handle in dev
   // eslint-disable-next-line no-var
   var __db: PostgresJsDatabase | undefined;
 }
 
 const connectionString = process.env.POSTGRES_URL ?? "";
-// keep a single connection per instance; drizzle will multiplex internally
 const sql = postgres(connectionString, { max: 1 });
 
 const db: PostgresJsDatabase = global.__db ?? drizzle(sql);
