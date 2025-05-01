@@ -11,9 +11,6 @@ declare global {
 }
 
 const connectionString = process.env.POSTGRES_URL ?? "";
-if (!connectionString) {
-  throw new Error("POSTGRES_URL is not defined");
-}
 // keep a single connection per instance; drizzle will multiplex internally
 const sql = postgres(connectionString, { max: 1 });
 
