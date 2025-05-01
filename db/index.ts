@@ -32,6 +32,13 @@ async function runMigrations() {
 }
 
 // trigger migrations immediately
-runMigrations();
+(async () => {
+  try {
+    await runMigrations();
+  } catch (error) {
+    logger.error("Failed to run migrations during initialization:", error);
+    process.exit(1); // Exit the process to signal failure
+  }
+})();
 
 export { db };
