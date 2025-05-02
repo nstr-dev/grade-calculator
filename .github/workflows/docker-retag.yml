@@ -17,10 +17,12 @@ jobs:
     steps:
       - name: Install crane
         run: |
-          apk add --no-cache git && go install github.com/google/go-containerregistry/cmd/crane@latest
+          apk add --no-cache coreutils git && go install github.com/google/go-containerregistry/cmd/crane@latest
 
       - name: Checkout repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Get commit SHA for tag
         id: get_sha
@@ -35,17 +37,29 @@ jobs:
 
       - name: Wait for image to exist
         run: |
-          echo "Waiting for image $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} to be available..."
-          until crane manifest $REGISTRY/$IMAGE_NAME:${COMMIT_SHA}; do
-            echo "Not available yet... waiting 5s"
-            sleep 5
-          done
+          echo "Waiting up to 10 minutes for $REGISTRY/$IMAGE_NAME:${COMMIT_SHA}..."
+          timeout 600s bash -c '
+            until crane manifest '"$REGISTRY/$IMAGE_NAME:${COMMIT_SHA}"'; do
+              echo "Not available yet... retrying in 5s"
+              sleep 5
+            done
+          '
           echo "Image is now available!"
 
       - name: Copy image to git tag
         run: |
           echo "Copying $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} to $REGISTRY/$IMAGE_NAME:${GITHUB_REF_NAME}"
           crane copy $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} $REGISTRY/$IMAGE_NAME:${GITHUB_REF_NAME}
+
+      - name: Tag image without v prefix
+        run: |
+          if [[ "$GITHUB_REF_NAME" == v* ]]; then
+            VERSION=${GITHUB_REF_NAME#v}
+            echo "Copying $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} to $REGISTRY/$IMAGE_NAME:${VERSION}"
+            crane copy $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} $REGISTRY/$IMAGE_NAME:${VERSION}
+          else
+            echo "No leading 'v' in tag name; skipping unprefixed tag"
+          fi
 
       - name: Done
         run: echo "Tagging completed successfully."
