@@ -41,7 +41,7 @@ jobs:
       - name: Wait for image to exist
         run: |
           echo "Waiting up to 10 minutes for $REGISTRY/$IMAGE_NAME:${COMMIT_SHA}..."
-          timeout 600s bash -c '
+          timeout 600s sh -c '
             until crane manifest '"$REGISTRY/$IMAGE_NAME:${COMMIT_SHA}"'; do
               echo "Not available yet... retrying in 5s"
               sleep 5
