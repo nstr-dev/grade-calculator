@@ -13,6 +13,8 @@ jobs:
     env:
       REGISTRY: docker.atlas.nstr.dev
       IMAGE_NAME: grade-calculator
+      DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+      DOCKER_REGISTRY_TOKEN: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
 
     steps:
       - name: Install crane
