@@ -7,7 +7,9 @@ on:
 
 jobs:
   tag-docker-image:
-    runs-on: golang:alpine
+    runs-on: ubuntu-latest
+    container:
+      image: golang:alpine
     env:
       REGISTRY: docker.atlas.nstr.dev
       IMAGE_NAME: grade-calculator
@@ -29,7 +31,7 @@ jobs:
 
       - name: Crane Login
         run: |
-          crane auth login $REGISTRY --username $USERNAME --password $TOKEN
+          crane auth login $REGISTRY --username $DOCKER_REGISTRY_USERNAME --password $DOCKER_REGISTRY_TOKEN
 
       - name: Wait for image to exist
         run: |
