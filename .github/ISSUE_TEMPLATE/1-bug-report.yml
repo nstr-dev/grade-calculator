@@ -16,8 +16,8 @@ body:
       label: Urgency
       description: Does the issue prevent you from using the app (eg. login not working, data gone, app unreachable, ...)
       options:
-        - No (Default)
-        - Yes
+        - "No (Default)"
+        - "Yes, this issue prevents app usage"
       default: 0
     validations:
       required: true
