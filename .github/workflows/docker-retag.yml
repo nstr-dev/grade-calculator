@@ -15,6 +15,8 @@ jobs:
       IMAGE_NAME: grade-calculator
       DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
       DOCKER_REGISTRY_TOKEN: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
+      DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+      DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
 
     steps:
       - name: Install crane
@@ -39,6 +41,7 @@ jobs:
       - name: Crane Login
         run: |
           crane auth login $REGISTRY --username $DOCKER_REGISTRY_USERNAME --password $DOCKER_REGISTRY_TOKEN
+          crane auth login docker.io --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_TOKEN
 
       - name: Wait for image to exist
         run: |
@@ -53,18 +56,24 @@ jobs:
 
       - name: Copy image to git tag
         run: |
-          echo "Copying $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} to $REGISTRY/$IMAGE_NAME:${GITHUB_REF_NAME}"
+          echo "Copying $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} to $REGISTRY/$IMAGE_NAME:${GITHUB_REF_NAME} (and docker.io)"
           crane copy $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} $REGISTRY/$IMAGE_NAME:${GITHUB_REF_NAME}
+          crane copy $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} $DOCKER_HUB_USERNAME/$IMAGE_NAME:${GITHUB_REF_NAME}
 
       - name: Tag image without v prefix
         run: |
           if [[ "$GITHUB_REF_NAME" == v* ]]; then
             VERSION=${GITHUB_REF_NAME#v}
-            echo "Copying $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} to $REGISTRY/$IMAGE_NAME:${VERSION}"
+            echo "Copying $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} to $REGISTRY/$IMAGE_NAME:${VERSION} (and docker.io)"
             crane copy $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} $REGISTRY/$IMAGE_NAME:${VERSION}
+            crane copy $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} $DOCKER_HUB_USERNAME/$IMAGE_NAME:${VERSION}
           else
             echo "No leading 'v' in tag name; skipping unprefixed tag"
           fi
+      - name: Copy image to latest for docker.io
+        run: |
+          echo "Copying $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} to docker.io as :latest"
+          crane copy $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} $DOCKER_HUB_USERNAME/$IMAGE_NAME:latest
 
       - name: Done
         run: echo "Tagging completed successfully."
