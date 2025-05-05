@@ -46,7 +46,7 @@ body:
       options:
         - "Higher grade is better"
         - "Lower grade is better"
-        - "Other (please describe)"
+        - 'Other (please describe in the "additional information" field)'
     validations:
       required: true
   - type: textarea
