@@ -30,6 +30,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Grade, GradeWithSubject } from "@/db/schema";
 import { MediaQueries, useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { doesGradePass } from "@/lib/services/notAsyncLogic";
@@ -160,7 +161,9 @@ export function AllGrades({
               <DrawerTitle>{t("grades.add")}</DrawerTitle>
               <DrawerDescription>{t("grades.add-desc")}</DrawerDescription>
             </DrawerHeader>
-            <CreateGradeForm refresh={refresh} setDrawerOpen={setOpen} />
+            <ScrollArea className="h-[68vh]">
+              <CreateGradeForm refresh={refresh} setDrawerOpen={setOpen} />
+            </ScrollArea>
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
                 <Button variant="outline">{t("actions.cancel")}</Button>
@@ -189,11 +192,13 @@ export function AllGrades({
                 <DrawerTitle>{t("grades.edit.title")}</DrawerTitle>
                 <DrawerDescription>{t("grades.edit.desc")}</DrawerDescription>
               </DrawerHeader>
-              <EditGradeForm
-                refresh={refresh}
-                setDrawerOpen={setEditOpen}
-                originalGrade={originalGrade}
-              />
+              <ScrollArea className="h-[68vh]">
+                <EditGradeForm
+                  refresh={refresh}
+                  setDrawerOpen={setEditOpen}
+                  originalGrade={originalGrade}
+                />
+              </ScrollArea>
               <DrawerFooter className="pt-2">
                 <DrawerClose asChild>
                   <Button variant="outline">{t("actions.cancel")}</Button>
