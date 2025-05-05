@@ -2,7 +2,8 @@ name: Bug Report
 description: Report, well, bugs
 type: "Bug"
 labels: ["Bug", "plane"]
-assignees: [noahstreller]
+assignees:
+  - noahstreller
 
 body:
   - type: markdown
