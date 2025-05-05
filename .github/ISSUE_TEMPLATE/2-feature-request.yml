@@ -1,0 +1,29 @@
+name: Feature Request
+description: Suggest an idea for this project
+type: "Feature"
+labels: ["Feature", "plane"]
+assignees:
+  - noahstreller
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for giving us feedback!
+  - type: textarea
+    id: is-problem
+    attributes:
+      label: Is your feature request related to a problem? If yes, please describe.
+      description: A clear and concise description of what the problem is. Ex. I'm always frustrated when...
+  - type: textarea
+    id: what-do-you-want
+    attributes:
+      label: Describe the solution/feature you'd like
+      description: What do you want to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Anything else you think is useful.
