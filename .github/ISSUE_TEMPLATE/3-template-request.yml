@@ -1,0 +1,56 @@
+name: Grading System Template Request
+description: Submit your country's grading system template here
+type: "Template"
+labels: ["template request"]
+assignees:
+  - noahstreller
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping us expand our grading system templates!
+  - type: input
+    id: grading-system
+    attributes:
+      label: Which grading system do you want to propose?
+      description: "Example: Switzerland"
+    validations:
+      required: true
+  - type: input
+    id: highest-grade
+    attributes:
+      label: What is the highest number you can get as a grade (highest, not best)?
+      description: "Example: 100"
+    validations:
+      required: true
+  - type: input
+    id: lowest-grade
+    attributes:
+      label: What is the lowest number you can get as a grade (lowest, not worst)?
+      description: "Example: 0"
+    validations:
+      required: true
+  - type: input
+    id: passing-grade
+    attributes:
+      label: What grade do you need to pass?
+      description: "Example: 60"
+    validations:
+      required: true
+  - type: dropdown
+    id: grading-direction
+    attributes:
+      label: Which way does your grading system work?
+      description: Select your option
+      options:
+        - "Higher grade is better"
+        - "Lower grade is better"
+        - "Other (please describe)"
+    validations:
+      required: true
+  - type: textarea
+    id: add-info
+    attributes:
+      label: Additional information
+      description: Anything else you think is useful.
