@@ -1,0 +1,34 @@
+name: Bug Report
+description: Report, well, bugs
+type: "Bug"
+labels: ["Bug", "plane"]
+assignees: [noahstreller]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping us report bugs!
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: Urgency
+      description: Does the issue prevent you from using the app (eg. login not working, data gone, app unreachable, ...)
+      options:
+        - No (Default)
+        - Yes
+      default: 0
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: And what did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Anything else you think is useful.
