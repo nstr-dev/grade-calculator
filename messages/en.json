@@ -332,7 +332,8 @@
       "discord": "Discord",
       "github": "GitHub",
       "google": "Google",
-      "email": "E-Mail sign-in"
+      "email": "E-Mail sign-in",
+      "retry": "Retry"
     },
     "legacy": {
       "description": "Check out the legacy version, if you prefer saving your data locally."

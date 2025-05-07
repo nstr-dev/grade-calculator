@@ -1,4 +1,5 @@
 import { db } from "@/db";
+import { users } from "@/db/schema";
 import {
   getRefreshTokenFromDb,
   saveRefreshTokenIntoDb,
@@ -9,8 +10,9 @@ import {
   NextApiRequest,
   NextApiResponse,
 } from "next";
-import { getServerSession, NextAuthOptions } from "next-auth";
+import { getServerSession, NextAuthOptions, User } from "next-auth";
 import type { Adapter } from "next-auth/adapters";
+import Credentials from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
 import EmailProvider from "next-auth/providers/email";
 import GithubProvider from "next-auth/providers/github";
@@ -49,32 +51,36 @@ export const config = {
         },
       },
     }),
-    {
-      id: "local",
-      name: "Local",
-      type: "oauth",
-      wellKnown:
-        process.env.NEXT_PUBLIC_MOCK_OAUTH_WELLKNOWN_URL ||
-        "http://localhost:8080/default/.well-known/openid-configuration",
-      clientId: "mock",
-      clientSecret: "mock",
-      profile(profile) {
-        return {
-          id: profile.sub,
-          name: profile.sub,
-          email: `${profile.sub}@nstr.dev`,
-          image: undefined,
-        };
-      },
-    },
-    ...(process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME &&
+    ...(process.env.MOCK_OAUTH_WELLKNOWN_URL
+      ? [
+          {
+            id: "local",
+            name: "Local",
+            type: "oauth",
+            wellKnown:
+              process.env.MOCK_OAUTH_WELLKNOWN_URL ||
+              "http://localhost:8080/default/.well-known/openid-configuration",
+            clientId: "mock",
+            clientSecret: "mock",
+            profile(profile) {
+              return {
+                id: profile.sub,
+                name: profile.sub,
+                email: `${profile.sub}@nstr.dev`,
+                image: undefined,
+              };
+            },
+          } as Provider,
+        ]
+      : []),
+    ...(process.env.CUSTOM_OAUTH_NAME &&
     process.env.CUSTOM_OAUTH_SECRET &&
     process.env.CUSTOM_OAUTH_CLIENT_ID &&
     process.env.CUSTOM_OAUTH_WELLKNOWN_URL
       ? [
           {
             id: "custom",
-            name: process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME,
+            name: process.env.CUSTOM_OAUTH_NAME,
             type: "oauth",
             wellKnown: process.env.CUSTOM_OAUTH_WELLKNOWN_URL,
             clientId: process.env.CUSTOM_OAUTH_CLIENT_ID,
@@ -92,6 +98,35 @@ export const config = {
           } as Provider,
         ]
       : []),
+    ...(process.env.NO_AUTH &&
+    (process.env.NO_AUTH === "true" || process.env.NO_AUTH === "1")
+      ? [
+          Credentials({
+            id: "noAuth",
+            name: "NoAuth",
+            credentials: {},
+            async authorize(credentials, req) {
+              const inserted = await db
+                .insert(users)
+                .values({
+                  id: "9090e027-3b15-43b4-ab84-ad133895927d",
+                  email: "user@local",
+                  name: "User",
+                  image: null,
+                })
+                .returning()
+                .onConflictDoUpdate({
+                  target: users.id,
+                  set: {
+                    name: "User",
+                  },
+                })
+                .execute();
+              return inserted[0] as User;
+            },
+          }),
+        ]
+      : []),
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
@@ -102,6 +137,8 @@ export const config = {
       return session;
     },
     jwt: async ({ user, token, account }) => {
+      if (process.env.SELFHOSTED && process.env.SELFHOSTED === "1")
+        return token;
       if (user) {
         token.uid = user.id;
       }

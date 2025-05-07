@@ -1,0 +1,47 @@
+services:
+  grades-db:
+    container_name: grade-calculator-db
+    environment:
+      POSTGRES_DB: "grades"
+      POSTGRES_PASSWORD: "<YOUR_PASSWORD>"
+      POSTGRES_USER: "grades"
+    healthcheck:
+      interval: 10s
+      retries: 10
+      test: "pg_isready -U grades -d grades"
+      timeout: 2s
+    image: "postgres:17-alpine"
+    restart: unless-stopped
+    command: -c 'max_connections=200'
+    volumes:
+      - "grades:/var/lib/postgresql/data"
+
+  grades-web:
+    container_name: grade-calculator-web
+    build:
+      context: .
+      dockerfile: DockerfileSelfhost
+    environment:
+      - NO_AUTH=false
+      - CUSTOM_OAUTH_CLIENT_ID=
+      - CUSTOM_OAUTH_SECRET=
+      - CUSTOM_OAUTH_WELLKNOWN_URL=
+      - CUSTOM_OAUTH_NAME=
+      - DISCORD_ID=
+      - DISCORD_SECRET=
+      - GITHUB_ID=
+      - GITHUB_SECRET=
+      - GOOGLE_ID=
+      - GOOGLE_SECRET=
+      - NEXTAUTH_SECRET='<YOUR_SECRET>'
+      - POSTGRES_DATABASE='grades'
+      - POSTGRES_HOST='grades-db'
+      - POSTGRES_PASSWORD='<YOUR_PASSWORD>'
+      - POSTGRES_URL='postgres://grades:<YOUR_PASSWORD>@grades-db/grades'
+      - POSTGRES_USER='grades'
+      - UMAMI_DATA_WEBSITE_ID=
+      - UMAMI_SCRIPT_URL=
+      - LOG_LEVEL='INFO'
+
+volumes:
+  grades:

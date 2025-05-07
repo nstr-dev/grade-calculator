@@ -2,6 +2,7 @@
 import { CategoryProvider } from "@/components/category-provider";
 import { PreferencesProvider } from "@/components/preferences-provider";
 import { ThemeProvider } from "@/components/theme-provider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 
 export default function Providers({
@@ -9,6 +10,8 @@ export default function Providers({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const queryClient = new QueryClient();
+
   return (
     <ThemeProvider
       attribute="class"
@@ -17,9 +20,11 @@ export default function Providers({
       disableTransitionOnChange
     >
       <SessionProvider>
-        <PreferencesProvider>
-          <CategoryProvider>{children}</CategoryProvider>
-        </PreferencesProvider>
+        <QueryClientProvider client={queryClient}>
+          <PreferencesProvider>
+            <CategoryProvider>{children}</CategoryProvider>
+          </PreferencesProvider>
+        </QueryClientProvider>
       </SessionProvider>
     </ThemeProvider>
   );
