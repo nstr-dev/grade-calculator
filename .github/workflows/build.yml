@@ -39,12 +39,14 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
-
+      - name: Set latest commit SHA
+        run: |
+          echo "LATEST_COMMIT_SHA=${{ github.event.pull_request.head.sha || github.sha }}" >> $GITHUB_ENV
       - name: Build and push selfhosted image
         id: docker_build_push_selfhosted
         run: |
-          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/grade-calculator:${GITHUB_SHA} -f selfhosting/Dockerfile .
-          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/grade-calculator:${GITHUB_SHA}
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/grade-calculator:${LATEST_COMMIT_SHA} -f selfhosting/Dockerfile .
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/grade-calculator:${LATEST_COMMIT_SHA}
           echo "BUILD_STATUS=success" >> $GITHUB_ENV
 
       - name: Print success message
