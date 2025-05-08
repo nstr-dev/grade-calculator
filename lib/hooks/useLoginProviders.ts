@@ -1,5 +1,4 @@
-// lib/hooks/useProviders.ts
-import { getProvidersByEnvironment } from "@/app/api/providers/route";
+import { getProvidersByEnvironment } from "@/lib/loginProviderRoute";
 import { useQuery } from "@tanstack/react-query";
 
 async function fetchProviders() {
