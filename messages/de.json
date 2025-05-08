@@ -180,20 +180,23 @@
   "privacy-policy": {
     "data-usage": {
       "title": "Wie werden deine Daten verwendet?",
-      "description": "Deine Daten werden verwendet, um dir die auf dieser Web-App angebotenen Dienste bereitzustellen. Sie werden sicher gespeichert und nicht an Dritte weitergegeben."
+      "description": "Deine Daten werden verwendet, um dir die auf dieser Web-App angebotenen Dienste bereitzustellen. Sie werden sicher gespeichert und nicht an Dritte weitergegeben.",
+      "selfhosted-description": "Deine Daten werden verwendet, um dir die auf dieser Web-App angebotenen Dienste bereitzustellen."
     },
     "deletion": {
       "description": "Ja, Du kannst dein Konto und alle zugehörigen Daten jederzeit in der Web-App löschen, indem Du auf <b>Einstellungen</b> klickst und dann <b>Konto löschen</b> wählst. \nDadurch werden <b>unmittelbar all deine Daten gelöscht</b>. Dies kann nicht rückgängig gemacht werden! \nDu kannst auch eine Datenlöschung beantragen, indem du mich per E-Mail kontaktierst: <maillink></maillink>",
-      "title": "Kann ich mein Konto und alle zugehörigen Daten löschen?"
+      "title": "Kann ich mein Konto und alle zugehörigen Daten löschen?",
+      "selfhosted-description": "Ja, Du kannst dein Konto und alle zugehörigen Daten jederzeit in der Web-App löschen, indem Du auf <b>Einstellungen</b> klickst und dann <b>Konto löschen</b> wählst. \nDadurch werden <b>unmittelbar all deine Daten gelöscht</b>. Dies kann nicht rückgängig gemacht werden!"
     },
     "legal-note": "Ich kenne mich in rechtlichen Angelegenheiten nicht wirklich aus, hier fehlt wahrscheinlich einiges. Wenn du Fragen hast, kannst du mich gerne kontaktieren: <maillink>dev@nstr.dev</maillink>",
     "security": {
-      "description": "Du kannst die Legacy-Version dieser Web-App verwenden, die keine Daten auf einem Server speichert.",
+      "description": "Du kannst die Legacy-Version dieser Web-App verwenden, die keine Daten auf einem Server speichert.\nAlternativ kanst du den Notenrechner auch selbst hosten.",
       "title": "Dein Code ist nicht sicher genug für meine Bedürfnisse, und ich vertraue dir meine Daten nicht an."
     },
     "storage": {
       "description": "Deine Daten werden in einer Datenbank auf einem Server in Österreich gespeichert.",
-      "title": "Wie werden deine Daten gespeichert?"
+      "title": "Wie werden deine Daten gespeichert?",
+      "selfhosted-description": "Die Daten werden im Datenbank-Container gespeichert, es sei denn, du hast dies geändert. \nBeim Selbsthosting liegt die Verantwortung für deine Daten bei dir."
     },
     "subtitle": "Diese Datenschutzerklärung erklärt, wie deine Daten gespeichert werden und zu welchem Zweck.",
     "what-is-collected": {
@@ -342,7 +345,8 @@
       "email": "E-Mail-Anmeldung",
       "github": "GitHub",
       "google": "Google",
-      "local": "Lokal"
+      "local": "Lokal",
+      "retry": "Erneut versuchen"
     },
     "request-link": "Link anfordern",
     "return-home": "Zurück zur Startseite",
@@ -373,7 +377,7 @@
   "cookie-policy": {
     "i-dont-want-cookies": {
       "how-to-clear-cookies": "Um zu verhindern, dass Cookies gespeichert werden, kannst du sie in deinen Browsereinstellungen deaktivieren und die Cookies von deinem Gerät löschen.",
-      "legacy-ad": "Alternativ kannst du die Legacy-Version dieser Web-App verwenden, die keine Cookies speichert. Beachte, dass die Legacy-Version nicht weiterentwickelt wird.",
+      "legacy-ad": "Gute Nachrichten: Du kannst diese Anwendung selbst hosten. \nDies bedeutet, dass die Cookies mit niemandem ausser dir selbst geteilt werden.\n\nAlternativ kannst du die Legacy-Version dieser Web-App verwenden, die keine Cookies speichert. Beachte, dass die Legacy-Version nicht weiterentwickelt wird.",
       "title": "Ich möchte keine Cookies!"
     },
     "legal-note": "Ich kenne mich in rechtlichen Angelegenheiten nicht wirklich aus, hier fehlt wahrscheinlich einiges. Wenn du Fragen hast, kannst du mich gerne kontaktieren: <maillink>dev@nstr.dev</maillink>",
@@ -457,7 +461,8 @@
     "cookie-policy": "Cookie-Richtlinie",
     "legacy-version": "Legacy-Version",
     "privacy-policy": "Datenschutz-Richtlinie",
-    "source-code": "Quellcode"
+    "source-code": "Quellcode",
+    "self-host": "Selbst hosten"
   },
   "subject-overview": {
     "description": "Hier siehst du eine Übersicht deiner Fächer",

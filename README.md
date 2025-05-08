@@ -13,6 +13,7 @@
 - ✅ [Status page](https://status.cloud.nstr.dev/status/grades)
 - ⚖️ [Privacy policy](http://grades.nstr.dev/privacy)
 - 🍪 [Cookie policy](https://grades.nstr.dev/cookies)
+- 🔌 [Selfhosting](https://links.nstr.dev/projects-grades?page=selfhosting)
 
 This is a grade calculator / dashboard that I built to have a better overview of my current academic performance. I was tired of always having to calculate the grade required to pass a subject. And to be honest, the grade dashboard of my school kinda sucks. The UI is horrible, and it doesn't show enough information for my needs. That's why I developed my own dashboard.
 
@@ -32,7 +33,7 @@ This is a grade calculator / dashboard that I built to have a better overview of
 - [Legacy version](https://legacy.grades.nstr.dev/) available for usage without account and cloud (unmaintained)
 - Exporting and importing your grades made easy
 - Categories to organize your subjects (useful if you attend multiple schools or want to separate your subjects)
-- Self-hosting will be possible in the future
+- Self-hosting possible
 
 ## Screenshots
 
@@ -51,3 +52,7 @@ _Note: only numeric grading scales are supported at the moment. You can use perc
 ![Dark Screenshot](https://github.com/noahstreller/grade-calculator/blob/main/public/screenshot-dark.png?raw=true)
 
 ![Light Screenshot](https://github.com/noahstreller/grade-calculator/blob/main/public/screenshot-light.png?raw=true)
+
+## Selfhosting
+
+This web-app can be selfhosted using Docker. Check out the guide [here](https://links.nstr.dev/projects-grades?page=selfhosting).

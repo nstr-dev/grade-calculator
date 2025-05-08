@@ -1,7 +1,12 @@
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
+
 export async function GET() {
+  return NextResponse.json(getProvidersByEnvironment());
+}
+
+export function getProvidersByEnvironment() {
   const oidcEnabled = Boolean(
     process.env.CUSTOM_OAUTH_CLIENT_ID &&
       process.env.CUSTOM_OAUTH_SECRET &&
@@ -26,8 +31,7 @@ export async function GET() {
       (process.env.NO_AUTH === "true" || process.env.NO_AUTH === "1")
   );
   const mockUrl = process.env.MOCK_OAUTH_WELLKNOWN_URL;
-
-  return NextResponse.json({
+  return {
     oidcEnabled,
     oidcButtonName,
     googleEnabled,
@@ -36,5 +40,5 @@ export async function GET() {
     selfhosted,
     noAuth,
     mockUrl,
-  });
+  };
 }

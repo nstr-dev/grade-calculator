@@ -19,13 +19,13 @@ import {
 import { Highlight } from "@/components/ui/card-stack";
 import { Separator } from "@/components/ui/separator";
 import { LoadingSpinner } from "@/components/ui/spinner";
+import { useLoginProviders } from "@/lib/hooks/useLoginProviders";
 import {
   SiDiscord,
   SiGithub,
   SiGoogle,
   SiOpenid,
 } from "@icons-pack/react-simple-icons";
-import { useQuery } from "@tanstack/react-query";
 import {
   Bird,
   Clock,
@@ -40,17 +40,8 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-async function fetchProviders() {
-  const res = await fetch("/api/providers");
-  if (!res.ok) throw new Error("Failed to fetch providers");
-  return res.json();
-}
-
 export function SignInPageComponent() {
-  const providerQuery = useQuery({
-    queryKey: ["providers"],
-    queryFn: fetchProviders,
-  });
+  const providerQuery = useLoginProviders();
 
   const session = useSession();
   const router = useRouter();

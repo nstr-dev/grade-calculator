@@ -7,11 +7,14 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Highlight } from "@/components/ui/card-stack";
+import { getServerLoginProviders } from "@/lib/hooks/useLoginProviders";
+import { GlobeIcon, ServerIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 export default function CookiePolicy() {
   const t = useTranslations();
+  const selfhosted = getServerLoginProviders().selfhosted;
   return (
     <div className="flex flex-col gap-6 w-5/6 lg:w-2/3 xl:w-2/5">
       <Breadcrumb>
@@ -91,17 +94,37 @@ export default function CookiePolicy() {
         {t("cookie-policy.i-dont-want-cookies.title")}
       </h2>
       <p>{t("cookie-policy.i-dont-want-cookies.how-to-clear-cookies")} </p>
-      <p>{t("cookie-policy.i-dont-want-cookies.legacy-ad")} </p>
-      <Button
-        data-umami-event="Navigate to Legacy Version"
-        variant="secondary"
-        className="w-fit self-center"
-        asChild
-      >
-        <Link href="https://legacy.grades.nstr.dev">
-          {t("external.legacy-version")}
-        </Link>
-      </Button>
+      {!selfhosted && (
+        <>
+          <p>{t("cookie-policy.i-dont-want-cookies.legacy-ad")} </p>
+          <div className="flex flex-row gap-3">
+            <Button
+              data-umami-event="Navigate to Selfhost Guide"
+              className="w-fit self-center"
+              asChild
+            >
+              <Link
+                target="_blank"
+                href="https://links.nstr.dev/projects-grades?page=selfhosting"
+              >
+                <ServerIcon className="mr-2 size-4" />
+                {t("external.self-host")}
+              </Link>
+            </Button>
+            <Button
+              data-umami-event="Navigate to Legacy Version"
+              variant="secondary"
+              className="w-fit self-center"
+              asChild
+            >
+              <Link href="https://legacy.grades.nstr.dev">
+                <GlobeIcon className="mr-2 size-4" />
+                {t("external.legacy-version")}
+              </Link>
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

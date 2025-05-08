@@ -14,6 +14,7 @@ import { CardStack, Highlight } from "@/components/ui/card-stack";
 import { CardBoard } from "@/components/ui/cardboard";
 import { Separator } from "@/components/ui/separator";
 import { Tabs } from "@/components/ui/tabs";
+import { useLoginProviders } from "@/lib/hooks/useLoginProviders";
 import { useDevice } from "@/lib/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 import { MOCKDATA } from "@/mockdata-export";
@@ -36,9 +37,19 @@ import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 
 export function LandingPage() {
+  const providerQuery = useLoginProviders();
+  const router = useRouter();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (providerQuery.isLoading) return;
+    if (providerQuery.data.selfhosted) {
+      router.push("/login");
+    }
+  }, [providerQuery, router]);
 
   const { isMobile } = useDevice();
   const t = useTranslations();
@@ -356,13 +367,16 @@ export function LandingPage() {
       ),
     },
   ];
-  return (
-    <div className="w-full h-fit">
-      <div className="[perspective:1000px] h-full relative b flex flex-col mx-auto w-11/12">
-        <Tabs tabs={PAGE_TABS} />
+  if (providerQuery.data && !providerQuery.data.selfhosted)
+    return (
+      <div className="w-full h-fit">
+        <div className="[perspective:1000px] h-full relative b flex flex-col mx-auto w-11/12">
+          <Tabs tabs={PAGE_TABS} />
+        </div>
       </div>
-    </div>
-  );
+    );
+
+  return <></>;
 }
 
 const REVIEW_CARDS = [
@@ -443,7 +457,6 @@ const REVIEW_CARDS = [
 function GettingStartedTab() {
   const { isMobile } = useDevice();
   const theme = useTheme();
-  const router = useRouter();
   const t = useTranslations();
   return (
     <CardBoard row={!isMobile}>
