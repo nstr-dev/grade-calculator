@@ -190,7 +190,7 @@
     },
     "legal-note": "Ich kenne mich in rechtlichen Angelegenheiten nicht wirklich aus, hier fehlt wahrscheinlich einiges. Wenn du Fragen hast, kannst du mich gerne kontaktieren: <maillink>dev@nstr.dev</maillink>",
     "security": {
-      "description": "Du kannst die Legacy-Version dieser Web-App verwenden, die keine Daten auf einem Server speichert.\nAlternativ kanst du den Notenrechner auch selbst hosten.",
+      "description": "Du kannst die Legacy-Version dieser Web-App verwenden, die keine Daten auf einem Server speichert.\nAlternativ kannst du den Notenrechner auch selbst hosten.",
       "title": "Dein Code ist nicht sicher genug für meine Bedürfnisse, und ich vertraue dir meine Daten nicht an."
     },
     "storage": {
