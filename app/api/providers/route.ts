@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
 export async function GET() {
   const oidcEnabled = Boolean(
     process.env.CUSTOM_OAUTH_CLIENT_ID &&
@@ -34,6 +35,6 @@ export async function GET() {
     discordEnabled,
     selfhosted,
     noAuth,
-    ...(mockUrl ? { mockUrl } : {}),
+    mockUrl,
   });
 }

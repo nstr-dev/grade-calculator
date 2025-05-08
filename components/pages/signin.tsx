@@ -19,7 +19,12 @@ import {
 import { Highlight } from "@/components/ui/card-stack";
 import { Separator } from "@/components/ui/separator";
 import { LoadingSpinner } from "@/components/ui/spinner";
-import { SiDiscord, SiGithub, SiGoogle } from "@icons-pack/react-simple-icons";
+import {
+  SiDiscord,
+  SiGithub,
+  SiGoogle,
+  SiOpenid,
+} from "@icons-pack/react-simple-icons";
 import { useQuery } from "@tanstack/react-query";
 import {
   Bird,
@@ -129,6 +134,22 @@ export function SignInPageComponent() {
                   {t("auth.providers.local")}
                 </Button>
               )}
+              {providerQuery.data.oidcEnabled &&
+                providerQuery.data.selfhosted && (
+                  <Button
+                    className="w-full"
+                    data-umami-event="Sign In"
+                    data-umami-event-provider={
+                      providerQuery.data.oidcButtonName
+                    }
+                    onClick={() => {
+                      signIn("custom");
+                    }}
+                  >
+                    <SiOpenid className="mr-2 size-4" />
+                    {providerQuery.data.oidcButtonName}
+                  </Button>
+                )}
 
               {providerQuery.data.discordEnabled && (
                 <Button
@@ -192,7 +213,7 @@ export function SignInPageComponent() {
               )}
             </CardContent>
           </Card>
-          {providerQuery.data.oidcEnabled && (
+          {providerQuery.data.oidcEnabled && !providerQuery.data.selfhosted && (
             <button
               className="text-muted-foreground text-sm"
               data-umami-event="Sign In"
