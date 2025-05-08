@@ -1,4 +1,4 @@
-name: Tag Docker Image on Git Tag
+name: Tag Docker Images on Git Tag
 
 on:
   push:
@@ -15,8 +15,6 @@ jobs:
       IMAGE_NAME: grade-calculator
       DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
       DOCKER_REGISTRY_TOKEN: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
-      DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-      DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
 
     steps:
       - name: Install crane
@@ -41,7 +39,6 @@ jobs:
       - name: Crane Login
         run: |
           crane auth login $REGISTRY --username $DOCKER_REGISTRY_USERNAME --password $DOCKER_REGISTRY_TOKEN
-          crane auth login docker.io --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_TOKEN
 
       - name: Wait for image to exist
         run: |
@@ -54,26 +51,68 @@ jobs:
           '
           echo "Image is now available!"
 
-      - name: Copy image to git tag
+      - name: Tag in private registry
         run: |
-          echo "Copying $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} to $REGISTRY/$IMAGE_NAME:${GITHUB_REF_NAME} (and docker.io)"
+          echo "Copying $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} to $REGISTRY/$IMAGE_NAME:${GITHUB_REF_NAME}"
           crane copy $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} $REGISTRY/$IMAGE_NAME:${GITHUB_REF_NAME}
-          crane copy $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} $DOCKER_HUB_USERNAME/$IMAGE_NAME:${GITHUB_REF_NAME}
-
-      - name: Tag image without v prefix
-        run: |
           if [[ "$GITHUB_REF_NAME" == v* ]]; then
             VERSION=${GITHUB_REF_NAME#v}
-            echo "Copying $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} to $REGISTRY/$IMAGE_NAME:${VERSION} (and docker.io)"
             crane copy $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} $REGISTRY/$IMAGE_NAME:${VERSION}
-            crane copy $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} $DOCKER_HUB_USERNAME/$IMAGE_NAME:${VERSION}
-          else
-            echo "No leading 'v' in tag name; skipping unprefixed tag"
           fi
-      - name: Copy image to latest for docker.io
-        run: |
-          echo "Copying $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} to docker.io as :latest"
-          crane copy $REGISTRY/$IMAGE_NAME:${COMMIT_SHA} $DOCKER_HUB_USERNAME/$IMAGE_NAME:latest
 
-      - name: Done
-        run: echo "Tagging completed successfully."
+      - name: Finish image tagging
+        run: echo "✅ Tagged normal image in registry"
+
+  tag-selfhosted-image:
+    runs-on: ubuntu-latest
+    container:
+      image: golang:alpine
+    env:
+      IMAGE_NAME: grade-calculator
+      DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+      DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+    steps:
+      - name: Install crane
+        run: |
+          apk add --no-cache coreutils git && go install github.com/google/go-containerregistry/cmd/crane@latest
+
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Mark workspace safe for Git
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Resolve commit SHA
+        id: get_sha
+        run: |
+          echo "COMMIT_SHA=$(git rev-list -n 1 $GITHUB_REF_NAME)" >> $GITHUB_ENV
+
+      - name: Authenticate to Docker Hub
+        run: |
+          crane auth login docker.io --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_TOKEN
+
+      - name: Wait for selfhosted image to appear
+        run: |
+          echo "Waiting up to 10 minutes for $REGISTRY/$IMAGE_NAME:${COMMIT_SHA}..."
+          timeout 600s sh -c '
+            until crane manifest "$DOCKER_HUB_USERNAME/$IMAGE_NAME:${COMMIT_SHA}"; do
+              echo "Not available yet... retrying in 5s"
+              sleep 5
+            done
+          '
+          echo "Image is now available!"
+
+      - name: Tag on Docker Hub
+        run: |
+          crane copy $DOCKER_HUB_USERNAME/$IMAGE_NAME:${COMMIT_SHA} $DOCKER_HUB_USERNAME/$IMAGE_NAME:${GITHUB_REF_NAME}
+          if [[ "$GITHUB_REF_NAME" == v* ]]; then
+            VERSION=${GITHUB_REF_NAME#v}
+            crane copy $DOCKER_HUB_USERNAME/$IMAGE_NAME:${COMMIT_SHA} $DOCKER_HUB_USERNAME/$IMAGE_NAME:${VERSION}
+          fi
+          crane copy $DOCKER_HUB_USERNAME/$IMAGE_NAME:${COMMIT_SHA} $DOCKER_HUB_USERNAME/$IMAGE_NAME:latest
+
+      - name: Finish selfhosted‐image tagging
+        run: echo "✅ Tagged selfhosted image on Docker Hub"
