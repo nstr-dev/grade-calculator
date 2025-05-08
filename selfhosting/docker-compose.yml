@@ -36,9 +36,11 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
-    build:
-      context: ..
-      dockerfile: Dockerfile
+    image: nstrdev/grade-calculator:latest
+    # If you prefer to build from source, uncomment these lines and comment out "image" one line above
+    # build:
+    #   context: ..
+    #   dockerfile: Dockerfile
     environment:
       # Disables authentication entirely when set to true or 1
       # Discouraged, only use this when you are the only person to access the application
