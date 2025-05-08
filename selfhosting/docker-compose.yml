@@ -1,3 +1,4 @@
+name: grade-calculator
 services:
   grades-db:
     container_name: grade-calculator-db
@@ -36,8 +37,8 @@ services:
       retries: 5
       start_period: 10s
     build:
-      context: .
-      dockerfile: selfhosting/Dockerfile
+      context: ..
+      dockerfile: Dockerfile
     environment:
       # Disables authentication entirely when set to true or 1
       # Discouraged, only use this when you are the only person to access the application

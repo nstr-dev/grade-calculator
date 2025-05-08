@@ -1,0 +1,7 @@
+http://auth.localhost:3121 {
+  reverse_proxy keycloak:8080
+}
+
+http://grades.localhost:3121 {
+  reverse_proxy grades-web:3000
+}
