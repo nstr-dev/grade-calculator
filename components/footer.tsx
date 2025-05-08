@@ -1,11 +1,13 @@
 import { FooterItem } from "@/components/footer-item";
 import { Separator } from "@/components/ui/separator";
+import { getServerLoginProviders } from "@/lib/hooks/useLoginProviders";
 import { SiGithub } from "@icons-pack/react-simple-icons";
-import { Cookie, GitBranch, Globe, Scale } from "lucide-react";
+import { Cookie, GitBranch, Globe, Scale, ServerIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 export async function Footer() {
   const t = await getTranslations();
+  const selfhosted = getServerLoginProviders().selfhosted;
   return (
     <footer className="mt-5 bottom-0 w-11/12 p-2 flex flex-col gap-2">
       <Separator />
@@ -18,14 +20,18 @@ export async function Footer() {
           <Cookie className="mr-2 size-4" />
           {t("external.cookie-policy")}
         </FooterItem>
-        <FooterItem href="https://legacy.grades.nstr.dev">
-          <Globe className="mr-2 size-4" />
-          {t("external.legacy-version")}
-        </FooterItem>
-        <FooterItem
-          newTab
-          href="https://github.com/nstr-dev/grade-calculator"
-        >
+        {selfhosted ? (
+          <FooterItem href="https://links.nstr.dev/projects-grades?page=selfhosting">
+            <ServerIcon className="mr-2 size-4" />
+            {t("external.self-host")}
+          </FooterItem>
+        ) : (
+          <FooterItem href="https://legacy.grades.nstr.dev">
+            <Globe className="mr-2 size-4" />
+            {t("external.legacy-version")}
+          </FooterItem>
+        )}
+        <FooterItem newTab href="https://github.com/nstr-dev/grade-calculator">
           <SiGithub className="mr-2 size-4" />
           {t("external.source-code")}
         </FooterItem>
@@ -39,7 +45,7 @@ export async function Footer() {
           }
         >
           <GitBranch className="mr-2 size-4" />
-          {process.env.VERCEL_ENV === "production"
+          {process.env.NODE_ENV === "production"
             ? process.env.npm_package_version || t("generic.env.production")
             : process.env.npm_package_version || t("generic.env.development")}
         </FooterItem>

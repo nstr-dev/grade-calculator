@@ -332,7 +332,8 @@
       "discord": "Discord",
       "github": "GitHub",
       "google": "Google",
-      "email": "E-Mail sign-in"
+      "email": "E-Mail sign-in",
+      "retry": "Retry"
     },
     "legacy": {
       "description": "Check out the legacy version, if you prefer saving your data locally."
@@ -382,7 +383,8 @@
     "privacy-policy": "Privacy Policy",
     "cookie-policy": "Cookie Policy",
     "legacy-version": "Legacy Version",
-    "source-code": "Source Code"
+    "source-code": "Source Code",
+    "self-host": "Selfhosting"
   },
   "data-management": {
     "title": "Manage data",
@@ -414,7 +416,7 @@
     "i-dont-want-cookies": {
       "title": "I don't want cookies!",
       "how-to-clear-cookies": "To prevent cookies from being stored, you can disable cookies in your browser settings and clear the cookies off your device.",
-      "legacy-ad": "Alternatively, you are free to use the legacy version of this web app, which does not store any cookies. Note that the legacy version is not actively developed."
+      "legacy-ad": "Good news: you can self host this application. This means, the cookies are not shared with anyone but yourself.\n\nAlternatively, you are free to use the legacy version of this web app, which does not store any cookies. Note that the legacy version is not actively developed."
     },
     "popup": {
       "title": "We use cookies",
@@ -464,19 +466,22 @@
     },
     "data-usage": {
       "title": "How is your data used?",
-      "description": "Your data is used to provide you with the services offered on this web app. It is stored securely and will not be shared with any third party."
+      "description": "Your data is used to provide you with the services offered on this web app. It is stored securely and will not be shared with any third party.",
+      "selfhosted-description": "Your data is used to provide you with the services offered on this web app."
     },
     "storage": {
       "title": "How is your data stored?",
-      "description": "Your data is stored in a database, hosted on a server located in Austria."
+      "description": "Your data is stored in a database, hosted on a server located in Austria.",
+      "selfhosted-description": "Your data is stored in the database container, unless you changed this. When self hosting, the responsibility over your data is yours."
     },
     "deletion": {
       "title": "Can I delete my account and all associated data?",
-      "description": "Yes, you can delete your account and all associated data at any time inside the web app, by clicking on <b>Settings</b>, and then choosing <b>Delete Account</b>. This will <b>immediately remove all your data</b> and is irreversible! You can also request a data deletion by contacting me via email: <maillink></maillink>"
+      "description": "Yes, you can delete your account and all associated data at any time inside the web app, by clicking on <b>Settings</b>, and then choosing <b>Delete Account</b>. This will <b>immediately remove all your data</b> and is irreversible! You can also request a data deletion by contacting me via email: <maillink></maillink>",
+      "selfhosted-description": "Yes, you can delete your account and all associated data at any time inside the web app, by clicking on <b>Settings</b>, and then choosing <b>Delete Account</b>. This will <b>immediately remove all your data</b> and is irreversible!"
     },
     "security": {
       "title": "Your code is not secure enough for my needs and I do not trust you with my data.",
-      "description": "You are free to use the legacy version of this web app, which does not store any data on a server."
+      "description": "You are free to use the legacy version of this web app, which does not store any data on a server. Alternatively, you may selfhost this grade calculator. "
     }
   }
 }

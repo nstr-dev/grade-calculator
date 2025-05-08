@@ -19,8 +19,21 @@ import {
 import { Highlight } from "@/components/ui/card-stack";
 import { Separator } from "@/components/ui/separator";
 import { LoadingSpinner } from "@/components/ui/spinner";
-import { SiDiscord, SiGithub, SiGoogle } from "@icons-pack/react-simple-icons";
-import { Bird, Clock, Container, Globe, MailCheck } from "lucide-react";
+import { useLoginProviders } from "@/lib/hooks/useLoginProviders";
+import {
+  SiDiscord,
+  SiGithub,
+  SiGoogle,
+  SiOpenid,
+} from "@icons-pack/react-simple-icons";
+import {
+  Bird,
+  Clock,
+  Container,
+  Globe,
+  MailCheck,
+  RotateCcwIcon,
+} from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -28,11 +41,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export function SignInPageComponent() {
+  const providerQuery = useLoginProviders();
+
   const session = useSession();
   const router = useRouter();
   const t = useTranslations();
   const params = useSearchParams();
-  const [error, setError] = useState<string | null>(params.get("error"));
+  const [error] = useState<string | null>(params.get("error"));
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -41,6 +56,18 @@ export function SignInPageComponent() {
   useEffect(() => {
     if (session.status === "authenticated") router.push("/");
   }, [session, router]);
+
+  useEffect(() => {
+    if (
+      providerQuery.isLoading ||
+      error ||
+      session.status !== "unauthenticated"
+    )
+      return;
+    if (providerQuery.data?.selfhosted && providerQuery.data?.noAuth) {
+      signIn("noAuth");
+    }
+  }, [providerQuery, error, session]);
 
   return (
     <div className="flex flex-col gap-5 h-fit w-5/6 md:w-1/2 lg:w-1/3 xl:w-1/4">
@@ -60,7 +87,7 @@ export function SignInPageComponent() {
         </BreadcrumbList>
       </Breadcrumb>
 
-      {session.status === "unauthenticated" ? (
+      {session.status === "unauthenticated" && !providerQuery.isLoading ? (
         <>
           {error && <AuthError error={error} />}
           <Card className="transition-all">
@@ -69,8 +96,22 @@ export function SignInPageComponent() {
               <CardDescription>{t("auth.sign-in-desc")}</CardDescription>
             </CardHeader>
             <CardContent className="gap-4 flex flex-col">
-              {process.env.NODE_ENV === "development" ||
-              process.env.NEXT_PUBLIC_MOCK_OAUTH_WELLKNOWN_URL ? (
+              {providerQuery.data?.selfhosted &&
+                providerQuery.data?.noAuth &&
+                error && (
+                  <Button
+                    className="w-full"
+                    data-umami-event="Sign In"
+                    data-umami-event-provider="Retry Selfhosted"
+                    onClick={() => {
+                      signIn("noAuth");
+                    }}
+                  >
+                    <RotateCcwIcon className="mr-2 size-4" />
+                    {t("auth.providers.retry")}
+                  </Button>
+                )}
+              {providerQuery.data.mockUrl && !providerQuery.data.noAuth && (
                 <Button
                   variant={"secondary"}
                   className="w-full"
@@ -83,72 +124,96 @@ export function SignInPageComponent() {
                   <Container className="mr-2 size-4" />
                   {t("auth.providers.local")}
                 </Button>
-              ) : (
-                <>
+              )}
+              {providerQuery.data.oidcEnabled &&
+                providerQuery.data.selfhosted && (
                   <Button
                     className="w-full"
                     data-umami-event="Sign In"
-                    data-umami-event-provider="Discord"
+                    data-umami-event-provider={
+                      providerQuery.data.oidcButtonName
+                    }
                     onClick={() => {
-                      signIn("discord");
+                      signIn("custom");
                     }}
                   >
-                    <SiDiscord className="mr-2 size-4" />
-                    {t("auth.providers.discord")}
+                    <SiOpenid className="mr-2 size-4" />
+                    {providerQuery.data.oidcButtonName}
                   </Button>
-                  <Button
-                    className="w-full"
-                    data-umami-event="Sign In"
-                    data-umami-event-provider="GitHub"
-                    onClick={() => {
-                      signIn("github");
-                    }}
-                  >
-                    <SiGithub className="mr-2 size-4" />
-                    {t("auth.providers.github")}
-                  </Button>
-                  <Button
-                    className="w-full"
-                    data-umami-event="Sign In"
-                    data-umami-event-provider="Google"
-                    onClick={() => {
-                      signIn("google");
-                    }}
-                  >
-                    <SiGoogle className="mr-2 size-4" />
-                    {t("auth.providers.google")}
-                  </Button>
-                  <Separator />
-                  <EmailLoginForm />
-                </>
+                )}
+
+              {providerQuery.data.discordEnabled && (
+                <Button
+                  className="w-full"
+                  data-umami-event="Sign In"
+                  data-umami-event-provider="Discord"
+                  onClick={() => {
+                    signIn("discord");
+                  }}
+                >
+                  <SiDiscord className="mr-2 size-4" />
+                  {t("auth.providers.discord")}
+                </Button>
+              )}
+              {providerQuery.data.githubEnabled && (
+                <Button
+                  className="w-full"
+                  data-umami-event="Sign In"
+                  data-umami-event-provider="GitHub"
+                  onClick={() => {
+                    signIn("github");
+                  }}
+                >
+                  <SiGithub className="mr-2 size-4" />
+                  {t("auth.providers.github")}
+                </Button>
+              )}
+              {providerQuery.data.googleEnabled && (
+                <Button
+                  className="w-full"
+                  data-umami-event="Sign In"
+                  data-umami-event-provider="Google"
+                  onClick={() => {
+                    signIn("google");
+                  }}
+                >
+                  <SiGoogle className="mr-2 size-4" />
+                  {t("auth.providers.google")}
+                </Button>
               )}
 
-              <Separator />
-              <CardDescription>{t("auth.legacy.description")}</CardDescription>
-              <Button
-                data-umami-event="Navigate to Legacy Version"
-                variant={"secondary"}
-                asChild
-              >
-                <Link href="https://legacy.grades.nstr.dev">
-                  <Globe className="size-4 mr-2" />
-                  {t("external.legacy-version")}
-                </Link>
-              </Button>
+              {!providerQuery.data.selfhosted && (
+                <>
+                  <Separator />
+                  <EmailLoginForm />
+                  <Separator />
+                  <CardDescription>
+                    {t("auth.legacy.description")}
+                  </CardDescription>
+                  <Button
+                    data-umami-event="Navigate to Legacy Version"
+                    variant={"secondary"}
+                    asChild
+                  >
+                    <Link href="https://legacy.grades.nstr.dev">
+                      <Globe className="size-4 mr-2" />
+                      {t("external.legacy-version")}
+                    </Link>
+                  </Button>
+                </>
+              )}
             </CardContent>
           </Card>
-          {process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME && (
+          {providerQuery.data.oidcEnabled && !providerQuery.data.selfhosted && (
             <button
               className="text-muted-foreground text-sm"
               data-umami-event="Sign In"
-              data-umami-event-provider={
-                process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME
-              }
+              data-umami-event-provider={providerQuery.data.oidcButtonName}
               onClick={() => {
                 signIn("custom");
               }}
             >
-              Log in with <b>{process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME}</b> SSO
+              Log in with <b>{providerQuery.data.oidcButtonName}</b>
             </button>
           )}
         </>

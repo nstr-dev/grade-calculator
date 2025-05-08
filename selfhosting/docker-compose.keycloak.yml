@@ -1,0 +1,170 @@
+name: grade-calculator-keycloak
+services:
+  grades-db:
+    container_name: grade-calculator-db
+    environment:
+      POSTGRES_DB: "grades"
+      POSTGRES_USER: "grades"
+
+      # Set this to your own secure database password
+      # Example:            openssl rand -base64 32
+      # Or the equivalent:  https://generate.plus/en/base64?gp_base64_base%5Blength%5D=32
+      POSTGRES_PASSWORD: "<YOUR_PASSWORD>"
+    healthcheck:
+      interval: 10s
+      retries: 10
+      test: ["CMD-SHELL", "pg_isready -U grades -d grades"]
+      timeout: 2s
+    image: "postgres:17-alpine"
+    restart: unless-stopped
+    command: -c 'max_connections=200'
+    networks:
+      - internal
+    volumes:
+      - "grade-calculator:/var/lib/postgresql/data"
+
+  grades-web:
+    container_name: grade-calculator-web
+    networks:
+      - internal
+    # ports:
+    # Set to your own port if desired, or remove it if you want to use a reverse proxy
+    # If you use a reverse proxy, let me know if there are issues here:
+    # https://github.com/nstr-dev/grade-calculator/issues/new/choose
+    # - 3122:3000
+    depends_on:
+      - grades-db
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    image: nstrdev/grade-calculator:latest
+    # If you prefer to build from source, uncomment these lines and comment out "image" one line above
+    # build:
+    #   context: ..
+    #   dockerfile: Dockerfile
+    extra_hosts:
+      - "auth.localhost:host-gateway"
+    environment:
+      # Disables authentication entirely when set to true or 1
+      # Discouraged, only use this when you are the only person to access the application
+      - NO_AUTH=false
+
+      # OIDC settings for custom OIDC providers, shows up if all properties are set
+      # OAuth Name will be displayed in the login page.
+      # If you use the included Keycloak, you must regenerate your OAUTH_SECRET here:
+      # http://auth.localhost:3121/admin/master/console/#/grades/clients/043ad278-a653-47f1-b57d-0b820a28a365/credentials
+      - CUSTOM_OAUTH_CLIENT_ID=grades
+      - CUSTOM_OAUTH_SECRET=<REGENERATE ME>
+      - "CUSTOM_OAUTH_WELLKNOWN_URL=http://auth.localhost:3121/realms/grades/.well-known/openid-configuration"
+      - CUSTOM_OAUTH_NAME=Keycloak
+
+      # Discord OAuth, shows up if id and secret are set
+      # Create an OAuth application here: https://discord.com/developers/applications
+      - DISCORD_ID=
+      - DISCORD_SECRET=
+
+      # GitHub OAuth, shows up if id and secret are set
+      # Create an OAuth application here: https://github.com/settings/apps
+
+      - GITHUB_ID=
+      - GITHUB_SECRET=
+      # Google OAuth, shows up if id and secret are set
+      # Create an OAuth application here: https://console.developers.google.com/apis/credentials
+
+      - GOOGLE_ID=
+      - GOOGLE_SECRET=
+
+      # Set this to your own secure secret
+      # Example:            openssl rand -base64 32
+      # Or the equivalent:  https://generate.plus/en/base64?gp_base64_base%5Blength%5D=32
+      - NEXTAUTH_SECRET=<YOUR_SECRET>
+
+      # If needed, set this to the URL you want to access the grade calculator from
+      # If using a reverse proxy, set this to the public URL
+      # Examples:
+      # https://grades.example.org
+      # http://192.168.1.3:3122
+      - NEXTAUTH_URL=http://grades.localhost:3121
+
+      # You must change the POSTGRES_PASSWORD and the POSTGRES_URL to match the password for the DB-Container
+      # Leave the rest as is.
+      - POSTGRES_DATABASE=grades
+      - POSTGRES_HOST=grades-db
+      - POSTGRES_USER=grades
+
+      - POSTGRES_PASSWORD=<YOUR_PASSWORD>
+      - POSTGRES_URL=postgres://grades:<YOUR_PASSWORD>@grades-db/grades
+
+      # Valid log levels: trace, debug, info, warn, error
+      - LOG_LEVEL=info
+
+  keycloak-db:
+    container_name: grades-keycloak-db
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      # Again, this needs to be changed
+      # openssl rand -base64 32
+      POSTGRES_PASSWORD: <YOUR_PASSWORD>
+    volumes:
+      - keycloak-db:/var/lib/postgresql/data
+    healthcheck:
+      interval: 10s
+      retries: 10
+      test: ["CMD-SHELL", "pg_isready -U keycloak -d keycloak"]
+      timeout: 2s
+    networks:
+      - internal
+
+  keycloak:
+    container_name: grades-keycloak
+    image: quay.io/keycloak/keycloak:latest
+    command: start-dev --import-realm
+    depends_on:
+      - keycloak-db
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: keycloak-db
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_USERNAME: keycloak
+      # Change this to the password of the keycloak-db container
+      KC_DB_PASSWORD: <YOUR_PASSWORD>
+      KC_HTTP_RELATIVE_PATH: /
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+    healthcheck:
+      test:
+        ["CMD-SHELL", "curl -f http://localhost:8080/realms/master || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    volumes:
+      - "./keycloak:/opt/keycloak/data/import"
+    networks:
+      - internal
+
+  caddy:
+    image: caddy:2
+    container_name: grades-caddy
+    ports:
+      - "3121:3121"
+    volumes:
+      - ./keycloak/Caddyfile:/etc/caddy/Caddyfile
+    networks:
+      - internal
+
+volumes:
+  grade-calculator:
+    name: grade-calculator-data
+  keycloak-db:
+    name: grades-auth-data
+
+networks:
+  internal:
+    driver: bridge
