@@ -16,7 +16,7 @@
 - 🔌 [Selfhosting](https://links.nstr.dev/projects-grades?page=selfhosting)
 
 A clean, powerful dashboard for tracking your academic performance.
-Easily calculate the grades you need to pass, visualize your progress, and stay on top of your subjects with a modern interface built for clarity and speed. The Grade Calculator supports weighted grades, customizable grading scales, and flexible subject organization—whether you're juggling courses across schools or just want a better way to manage your grades.
+Easily calculate the grades you need to pass, visualize your progress, and stay on top of your subjects with a modern interface built for clarity and speed. The Grade Calculator supports weighted grades, customizable grading scales, and flexible subject organization - for example, if you attend mulitple schools and want to separate those subjects.
 
 Use it online at nstr.dev or self-host it with Docker.
 
