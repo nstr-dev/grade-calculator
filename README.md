@@ -15,25 +15,29 @@
 - 🍪 [Cookie policy](https://grades.nstr.dev/cookies)
 - 🔌 [Selfhosting](https://links.nstr.dev/projects-grades?page=selfhosting)
 
-This is a grade calculator / dashboard that I built to have a better overview of my current academic performance. I was tired of always having to calculate the grade required to pass a subject. And to be honest, the grade dashboard of my school kinda sucks. The UI is horrible, and it doesn't show enough information for my needs. That's why I developed my own dashboard.
+A clean, powerful dashboard for tracking your academic performance.
+Easily calculate the grades you need to pass, visualize your progress, and stay on top of your subjects with a modern interface built for clarity and speed. The Grade Calculator supports weighted grades, customizable grading scales, and flexible subject organization - for example, if you attend mulitple schools and want to separate those subjects.
+
+Use it online at nstr.dev or self-host it with Docker.
 
 ## Key Features
 
-- Modern design thanks to shadcn/ui components and Tailwind magic
+- Modern UI
 - Customizable numeric grade scale
 - Visualizing your grades using graphs and charts
 - View the grades you need to pass a subject at a glance
 - Supports grade weights
 - Mark subjects as irrelevant for academic promotion
 - See the subjects you struggle in summarized
-- Option to wipe account data from the database
+- Option to wipe account data from the database with a click of a button
 - Cloud synced for easy access anywhere
 - Log in using your service (currently `Discord`, `Google`, `GitHub`) or with a magic link sent to your email
-- Desktop first, but the mobile interface works well thanks to responsive design
+- Responsive on mobile and desktop devices
 - [Legacy version](https://legacy.grades.nstr.dev/) available for usage without account and cloud (unmaintained)
+- [Selfhostable](https://links.nstr.dev/projects-grades?page=selfhosting) for privacy oriented folks
 - Exporting and importing your grades made easy
 - Categories to organize your subjects (useful if you attend multiple schools or want to separate your subjects)
-- Self-hosting possible
+- Free forever with no ads
 
 ## Screenshots
 
