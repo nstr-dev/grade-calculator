@@ -3,8 +3,11 @@ import { Suspense } from "react";
 
 export default function LoginPage() {
   return (
-    <Suspense>
-      <SignInPageComponent />
-    </Suspense>
+    <>
+      <meta name="robots" content="noindex,nofollow" />
+      <Suspense>
+        <SignInPageComponent />
+      </Suspense>
+    </>
   );
 }

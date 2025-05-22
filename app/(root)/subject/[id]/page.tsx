@@ -115,6 +115,7 @@ function SubjectDetails({ subjectId }: Readonly<{ subjectId: string }>) {
   if (session.status === "unauthenticated")
     return (
       <div>
+        <meta name="robots" content="noindex,nofollow" />
         <Breadcrumb className="pl-2 pb-3">
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -160,6 +161,7 @@ function SubjectDetails({ subjectId }: Readonly<{ subjectId: string }>) {
   if (dataState === "empty" || (grades.length === 0 && dataState === "loaded"))
     return (
       <div>
+        <meta name="robots" content="noindex,nofollow" />
         <Breadcrumb className="pl-2 pb-3">
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -196,6 +198,7 @@ function SubjectDetails({ subjectId }: Readonly<{ subjectId: string }>) {
   if (dataState === "notfound")
     return (
       <div>
+        <meta name="robots" content="noindex,nofollow" />
         <Breadcrumb className="pl-2 pb-3">
           <BreadcrumbList>
             <BreadcrumbItem>
