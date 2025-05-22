@@ -9,7 +9,7 @@ const withSerwist = withSerwistInit({
   additionalPrecacheEntries: [
     {
       url: "/offline",
-      revision: "1",
+      revision:  `${Date.now()}__${Math.floor(Math.random() * 100000)}`,
     },
   ],
   disable: process.env.NODE_ENV === "development",
