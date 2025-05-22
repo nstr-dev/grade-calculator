@@ -13,7 +13,7 @@ import { getLocale, getMessages } from "next-intl/server";
 import { Author } from "next/dist/lib/metadata/types/metadata-types";
 import { Inter } from "next/font/google";
 import Script from "next/script";
-import "../styles/globals.css";
+import "../../styles/globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 const authors: Author[] = [

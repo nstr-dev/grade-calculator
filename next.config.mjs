@@ -6,6 +6,12 @@ const withNextIntl = createNextIntlPlugin();
 const withSerwist = withSerwistInit({
   swSrc: "app/sw.ts",
   swDest: "public/sw.js",
+  additionalPrecacheEntries: [
+    {
+      url: "/offline",
+      revision: "1",
+    },
+  ],
   disable: process.env.NODE_ENV === "development",
 });
 
