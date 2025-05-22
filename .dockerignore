@@ -37,3 +37,14 @@ public/sw.js
 
 # flags
 public/flags
+
+.github
+.vscode
+docker/umami
+raw-files
+scripts
+selfhosting
+
+.env.*.local
+.env.local
+README.md
