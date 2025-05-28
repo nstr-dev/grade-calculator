@@ -18,7 +18,6 @@ import {
   SatelliteDish,
 } from "lucide-react";
 import Link from "next/link";
-import { useEffect } from "react";
 
 export const OfflinePage = () => {
   const connectionChecks = useConnectionChecks();
