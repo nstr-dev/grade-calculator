@@ -5,7 +5,6 @@ async function checkConnectionToBackend() {
     const res = await fetch("/api/status");
     if (!res.ok) return false;
     const data = await res.json();
-    console.log(data.status === "UP");
     return data.status === "UP";
   } catch {
     return false;
@@ -33,6 +32,7 @@ export function useConnectionChecks() {
   return useQuery({
     queryKey: ["connectionChecks"],
     queryFn: checkConnections,
-    staleTime: 1000 * 5,
+    refetchInterval: 2000,
+    refetchOnReconnect: true,
   });
 }
