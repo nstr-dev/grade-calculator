@@ -22,7 +22,6 @@ import { useEffect } from "react";
 
 export const OfflinePage = () => {
   const connectionChecks = useConnectionChecks();
-  useEffect(() => console.log(connectionChecks), [connectionChecks]);
   return (
     <div className="w-screen">
       <div className="w-10/12 m-auto inset-0 flex flex-col items-center justify-center bg-background z-50">
