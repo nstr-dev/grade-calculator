@@ -346,7 +346,8 @@
       "github": "GitHub",
       "google": "Google",
       "local": "Lokal",
-      "retry": "Erneut versuchen"
+      "retry": "Erneut versuchen",
+      "grades": "Passwort-Login"
     },
     "request-link": "Link anfordern",
     "return-home": "Zurück zur Startseite",

@@ -33,6 +33,7 @@ import {
   Globe,
   MailCheck,
   RotateCcwIcon,
+  ShieldEllipsisIcon,
 } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
@@ -96,6 +97,19 @@ export function SignInPageComponent() {
               <CardDescription>{t("auth.sign-in-desc")}</CardDescription>
             </CardHeader>
             <CardContent className="gap-4 flex flex-col">
+              {!providerQuery.data.selfhosted && (
+                <Button
+                  className="w-full"
+                  data-umami-event="Sign In"
+                  data-umami-event-provider="nstr-keycloak"
+                  onClick={() => {
+                    signIn("nstr-auth");
+                  }}
+                >
+                  <ShieldEllipsisIcon className="mr-2 size-4" />
+                  {t("auth.providers.grades")}
+                </Button>
+              )}
               {providerQuery.data?.selfhosted &&
                 providerQuery.data?.noAuth &&
                 error && (

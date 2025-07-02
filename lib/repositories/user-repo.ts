@@ -5,22 +5,39 @@ import {
   Account,
   Grade,
   Subject,
-  User,
+  UserAccount,
   accounts,
   grades,
   subjects,
   users,
 } from "@/db/schema";
+import { catchProblem } from "@/lib/problem";
+import { getAccount } from "@/lib/services/user-service";
 import { Empty } from "@/types/types";
 import { and, eq } from "drizzle-orm";
 
-export async function deleteUserDataFromDb(userId: string): Promise<User> {
+export async function deleteUserDataFromDb(
+  userId: string
+): Promise<UserAccount> {
+  const account = catchProblem(await getAccount());
   const result = await db
     .delete(users)
     .where(eq(users.id, userId))
     .returning()
     .execute();
-  return result[0];
+  return {
+    user: result[0],
+    account,
+  };
+}
+
+export async function getAccountFromDb(userId: string): Promise<Account> {
+  const account = await db
+    .select()
+    .from(accounts)
+    .where(eq(accounts.userId, userId))
+    .execute();
+  return account[0];
 }
 
 export async function clearUserSubjectsGradesFromDb(

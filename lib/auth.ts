@@ -98,6 +98,30 @@ export const config = {
           } as Provider,
         ]
       : []),
+    ...(process.env.NSTR_OAUTH_CLIENT_ID &&
+    process.env.NSTR_OAUTH_SECRET &&
+    process.env.NSTR_OAUTH_WELLKNOWN_URL
+      ? [
+          {
+            id: "nstr-auth",
+            name: "Password Login",
+            type: "oauth",
+            wellKnown: process.env.NSTR_OAUTH_WELLKNOWN_URL,
+            clientId: process.env.NSTR_OAUTH_CLIENT_ID,
+            clientSecret: process.env.NSTR_OAUTH_SECRET,
+            authorization: { params: { scope: "openid email profile" } },
+            checks: ["pkce", "state"],
+            profile(profile) {
+              return {
+                id: profile.sub,
+                name: profile.name ?? profile.preferred_username,
+                email: profile.email,
+                image: profile.picture,
+              };
+            },
+          } as Provider,
+        ]
+      : []),
     ...(process.env.NO_AUTH &&
     (process.env.NO_AUTH === "true" || process.env.NO_AUTH === "1")
       ? [

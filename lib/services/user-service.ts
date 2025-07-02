@@ -1,6 +1,6 @@
 "use server";
 
-import { Account, Grade, Subject, User } from "@/db/schema";
+import { Account, Grade, Subject, UserAccount } from "@/db/schema";
 import { logger } from "@/lib/logger";
 import { Problem, getProblem } from "@/lib/problem";
 import {
@@ -9,6 +9,7 @@ import {
   clearUserSubjectsGradesByCategoryFromDb,
   clearUserSubjectsGradesFromDb,
   deleteUserDataFromDb,
+  getAccountFromDb,
   getRefreshTokenFromDb,
   saveRefreshTokenIntoDb,
 } from "@/lib/repositories/user-repo";
@@ -64,6 +65,19 @@ export async function clearUserGrades(): Promise<Grade[] | Problem> {
   }
 }
 
+export async function getAccount(): Promise<Account | Problem> {
+  try {
+    const userId = await getUserId();
+    return await getAccountFromDb(userId);
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+    }) satisfies Problem;
+  }
+}
+
 export async function clearUserGradesByCategory(
   categoryId: number
 ): Promise<Grade[] | Problem> {
@@ -82,7 +96,7 @@ export async function clearUserGradesByCategory(
   }
 }
 
-export async function clearUserData(): Promise<User | Problem> {
+export async function clearUserData(): Promise<UserAccount | Problem> {
   try {
     const userId = await getUserId();
     logger.warn("Clearing all user data for user=" + userId);

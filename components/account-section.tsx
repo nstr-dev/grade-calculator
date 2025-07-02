@@ -13,6 +13,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { UserAccount } from "@/db/schema";
+import { deleteKeycloakAccount } from "@/lib/keycloak-deletion";
+import { catchProblem } from "@/lib/problem";
 import { clearUserData } from "@/lib/services/user-service";
 import {
   getInitials,
@@ -32,9 +35,11 @@ export function AccountSection() {
 
   const t = useTranslations();
 
-  const clearData = () => {
-    clearUserData();
-    signOut();
+  const clearData = async () => {
+    const resultKeycloak: { success: boolean } = await deleteKeycloakAccount();
+    const resultDbData: UserAccount = catchProblem(await clearUserData());
+    if (resultDbData.account.userId && resultKeycloak.success === true)
+      signOut();
   };
 
   useEffect(() => {

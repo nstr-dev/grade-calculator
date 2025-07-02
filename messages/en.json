@@ -329,6 +329,7 @@
     "sign-in-desc": "Sign in to your account using one of the providers below.",
     "providers": {
       "local": "Local",
+      "grades": "Password sign-in",
       "discord": "Discord",
       "github": "GitHub",
       "google": "Google",
