@@ -113,4 +113,13 @@ export const templates: PreferenceTemplate[] = [
     maximumGrade: 4,
     passingInverse: false,
   },
+  {
+    id: "us_texas",
+    icon: getFlag("US"),
+    title: "Texas",
+    passingGrade: 70,
+    minimumGrade: 30,
+    maximumGrade: 100,
+    passingInverse: false,
+  },
 ];
