@@ -1,7 +1,7 @@
 name: Grading System Template Request
 description: Submit your country's grading system template here
 type: "Template"
-labels: ["template request"]
+labels: ["template request", "plane"]
 assignees:
   - noahstreller
 
