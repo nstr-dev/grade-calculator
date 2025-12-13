@@ -1,4 +1,3 @@
-import type { AdapterAccount } from "@auth/core/adapters";
 import {
   boolean,
   doublePrecision,
@@ -11,6 +10,7 @@ import {
   unique,
   varchar,
 } from "drizzle-orm/pg-core";
+import { AdapterAccount } from "next-auth/adapters";
 
 export const grades = pgTable("grades", {
   id: serial("id").primaryKey(),

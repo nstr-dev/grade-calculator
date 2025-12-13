@@ -44,7 +44,7 @@ export async function deleteKeycloakAccountById(userId: string) {
   const tokenData = await tokenResponse.json();
   const accessToken = tokenData.access_token;
 
-  logger.info("Deleting Keycloak account with id: ", userId);
+  logger.info(`Deleting Keycloak account with id: ${userId}`);
   const deleteResponse = await fetch(
     `${keycloakHost}/admin/realms/${realm}/users/${userId}`,
     {
