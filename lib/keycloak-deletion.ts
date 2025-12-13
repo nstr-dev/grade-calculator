@@ -12,7 +12,7 @@ export async function deleteKeycloakAccount() {
   return { success: true };
 }
 
-export async function deleteKeycloakAccountById(userId: string) {
+async function deleteKeycloakAccountById(userId: string) {
   const keycloakHost = "https://auth.atlas.nstr.dev";
   const realm = "public";
   const clientId = "account-deletion";
