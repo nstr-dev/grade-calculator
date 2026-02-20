@@ -7,7 +7,7 @@ import { getAccount } from "@/lib/services/user-service";
 
 export async function deleteKeycloakAccount() {
   const account: Account = catchProblem(await getAccount());
-  if (account.provider === "nstr-auth")
+  if (account?.provider === "nstr-auth")
     return deleteKeycloakAccountById(account.providerAccountId);
   return { success: true };
 }
@@ -34,7 +34,7 @@ async function deleteKeycloakAccountById(userId: string) {
         client_id: clientId,
         client_secret: clientSecret,
       }).toString(),
-    }
+    },
   );
 
   if (!tokenResponse.ok) {
@@ -52,13 +52,13 @@ async function deleteKeycloakAccountById(userId: string) {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    }
+    },
   );
 
   if (!deleteResponse.ok) {
     const errorText = await deleteResponse.text();
     throw new Error(
-      `Failed to delete user: ${deleteResponse.status} ${errorText}`
+      `Failed to delete user: ${deleteResponse.status} ${errorText}`,
     );
   }
 
