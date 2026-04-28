@@ -128,8 +128,22 @@ export default async function RootLayout({
           data-do-not-track={process.env.NODE_ENV === "production"}
           src={process.env.UMAMI_SCRIPT_URL}
           data-website-id={process.env.UMAMI_DATA_WEBSITE_ID}
+          data-performance="true"
         />
       )}
+      {process.env.UMAMI_SCRIPT_RECORDER_URL &&
+        process.env.UMAMI_DATA_WEBSITE_ID && (
+          <Script
+            defer
+            src={process.env.UMAMI_SCRIPT_RECORDER_URL}
+            data-website-id={process.env.UMAMI_DATA_WEBSITE_ID}
+            data-do-not-track={process.env.NODE_ENV === "production"}
+            data-sample-rate="1"
+            data-mask-level="moderate"
+            data-max-duration="300000"
+            data-performance="true"
+          ></Script>
+        )}
       <body className={cn(inter.className)}>
         {maintenance.maintenance ? (
           <Maintenance maintenance={maintenance} />
